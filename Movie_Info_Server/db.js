@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
-let userName = 'MovieDBAdmin'
-let password = 'JLwZt9$ZLWgg4md'
-let dbName = 'movie_info_database'
+let userName = process.env.DB_USER
+let password = process.env.DB_PASS
+let dbName = process.env.DB_NAME
 let dbUrl = `mongodb+srv://${userName}:${password}@cluster0.l8wld.mongodb.net/${dbName}?retryWrites=true&w=majority`
-
 async function dbInit(){
     await mongoose.connect(dbUrl)
 }

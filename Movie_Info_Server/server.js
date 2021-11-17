@@ -1,10 +1,12 @@
 // Dependencies
+require('dotenv').config()
 const express = require("express");
 const fileUpload = require("express-fileupload");
 
+
 // Server
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 // MiddleWares
 app.use(fileUpload());
