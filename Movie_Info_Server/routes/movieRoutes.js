@@ -13,7 +13,7 @@ movieRoutes.get("/getby_tmdb_id", async (req, res) => {
     res.json(response);
   } else {
     let response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${tmdb}?api_key=b5ace0ef9632f0269d0d8b57da2d3d6b`
+      `https://api.themoviedb.org/3/movie/${tmdb}?api_key=${process.env.TMDB_API_KEY}`
     );
     let m = response.data;
     let movieObj = {
@@ -41,7 +41,7 @@ movieRoutes.get("/getby_tmdb_id", async (req, res) => {
 
     // Get Movie Trailer
     let trailer_response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${tmdb}/videos?api_key=b5ace0ef9632f0269d0d8b57da2d3d6b`
+      `https://api.themoviedb.org/3/movie/${tmdb}/videos?api_key=${process.env.TMDB_API_KEY}`
     );
     let clips = trailer_response.data.results;
     let trailer_key = ""
@@ -57,7 +57,7 @@ movieRoutes.get("/getby_tmdb_id", async (req, res) => {
     let cast_response = await axios.get(`https://data-imdb1.p.rapidapi.com/movie/id/${movieObj.IMDB_id}/cast/`,{
         headers: {
             'x-rapidapi-host': 'data-imdb1.p.rapidapi.com',
-            'x-rapidapi-key': '4755fe6f5cmshfce3fde01e42fb1p1efedfjsn26eda2ac8f76'
+            'x-rapidapi-key': `${process.env.RAPID_API_KEY}`
           }
     })
 
