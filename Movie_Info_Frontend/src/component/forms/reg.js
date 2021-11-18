@@ -4,15 +4,15 @@ import "./login.css";
 const Registration = () =>{
   return (
     <div>
-      <div class="main">
-        <div class="container">
-          <div class="signup-content">
-            <form method="POST" id="signup-form" class="signup-form">
+      <div className="main">
+        <div className="container">
+          <div className="signup-content">
+            <form method="POST" id="signup-form" className="signup-form">
               <h2>Sign Up</h2>
-              <div class="form-group">
+              <div className="form-group">
                 <input
                   type="username"
-                  class="form-input"
+                  className="form-input"
                   name="username"
                   id="username"
                   placeholder="Username"
@@ -20,10 +20,10 @@ const Registration = () =>{
                 />
                 <small></small>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <input
                   type="email"
-                  class="form-input"
+                  className="form-input"
                   name="email"
                   id="email"
                   placeholder="Email"
@@ -31,10 +31,10 @@ const Registration = () =>{
                 />
                 <small></small>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <input
-                  type="text"
-                  class="form-input"
+                  type="password"
+                  className="form-input"
                   name="password"
                   id="password"
                   placeholder="Password"
@@ -42,10 +42,10 @@ const Registration = () =>{
                 />
                 <small></small>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <input
-                  type="text"
-                  class="form-input"
+                  type="password"
+                  className="form-input"
                   name="confirm-password"
                   id="confirmpassword"
                   placeholder="Confirm Password"
@@ -53,14 +53,14 @@ const Registration = () =>{
                 />
                 <small></small>
               </div>
-              <button class="submit-form">
+              <button className="submit-form">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Register
               </button>
-              <span class="existing">already a member<a href="/login">sign in</a></span>
+              <span className="existing">already a member<a href="/login">sign in</a></span>
             </form>
           </div>
         </div>
