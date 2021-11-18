@@ -7,7 +7,7 @@ const Registration = () =>{
       <div className="main">
         <div className="container">
           <div className="signup-content">
-            <form method="POST" id="signup-form" className="signup-form">
+            <form method="POST" id="signup-form" className="signup-form" >
               <h2>Sign Up</h2>
               <div className="form-group">
                 <input
@@ -17,6 +17,7 @@ const Registration = () =>{
                   id="username"
                   placeholder="Username"
                   autoComplete="off"
+
                 />
                 <small></small>
               </div>
@@ -28,6 +29,7 @@ const Registration = () =>{
                   id="email"
                   placeholder="Email"
                   autoComplete="off"
+
                 />
                 <small></small>
               </div>
@@ -39,6 +41,7 @@ const Registration = () =>{
                   id="password"
                   placeholder="Password"
                   autoComplete="off"
+
                 />
                 <small></small>
               </div>
@@ -50,6 +53,7 @@ const Registration = () =>{
                   id="confirmpassword"
                   placeholder="Confirm Password"
                   autoComplete="off"
+
                 />
                 <small></small>
               </div>
