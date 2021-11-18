@@ -6,14 +6,16 @@ const axios = require("axios").default;
 // Router
 const movieRoutes = Router();
 
-movieRoutes.get("/getby_tmdb_id", async (req, res) => {
-  let tmdb = req.query.tmdb_id;
-  let response = await MovieModel.find({ TMDB_id: tmdb });
+movieRoutes.get("/by_id", async (req, res) => {
+  let id = req.query.id;
+  let key = (req.query.type==="imdb"? "IMDB_id" : "TMDB_id")
+  let response = await MovieModel.find({ key : id });
+  
   if (response.length != 0) {
     res.json(response);
   } else {
     let response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${tmdb}?api_key=${process.env.TMDB_API_KEY}`
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.TMDB_API_KEY}`
     );
     let m = response.data;
     let movieObj = {
@@ -31,63 +33,95 @@ movieRoutes.get("/getby_tmdb_id", async (req, res) => {
       }),
       language: m.spoken_languages[0].english_name,
       rating: m.vote_average,
-      // Not Required
+      // Not Marked as Required in Schema
       trailer_link: "",
       actors: [],
       directors: [],
-      writers:[],
+      writers: [],
       tagline: m.tagline,
     };
 
     // Get Movie Trailer
     let trailer_response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${tmdb}/videos?api_key=${process.env.TMDB_API_KEY}`
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${process.env.TMDB_API_KEY}`
     );
     let clips = trailer_response.data.results;
-    let trailer_key = ""
-    for (i in clips){
-        if(clips[i].type==="Trailer"){
-            trailer_key = clips[i].key
-            break
-        }
+    let trailer_key = "";
+    for (i in clips) {
+      if (clips[i].type === "Trailer") {
+        trailer_key = clips[i].key;
+        break;
+      }
     }
-    movieObj.trailer_link = trailer_key
+    movieObj.trailer_link = trailer_key;
 
     // Get Movie Cast
-    let cast_response = await axios.get(`https://data-imdb1.p.rapidapi.com/movie/id/${movieObj.IMDB_id}/cast/`,{
+    let cast_response = await axios.get(
+      `https://data-imdb1.p.rapidapi.com/movie/id/${movieObj.IMDB_id}/cast/`,
+      {
         headers: {
-            'x-rapidapi-host': 'data-imdb1.p.rapidapi.com',
-            'x-rapidapi-key': `${process.env.RAPID_API_KEY}`
-          }
-    })
+          "x-rapidapi-host": "data-imdb1.p.rapidapi.com",
+          "x-rapidapi-key": `${process.env.RAPID_API_KEY}`,
+        },
+      }
+    );
 
     // Full Cast Array
-    let full_cast = cast_response.data.results.roles
+    let full_cast = cast_response.data.results.roles;
 
     for (let i = 0; i < full_cast.length; i++) {
-        let role = full_cast[i].role
-        let actor_info = full_cast[i].actor
-        let complete_info = {}
-        complete_info.role = role;
-        complete_info.actor_info = actor_info
-        
-        if(role==="Director"){
-            movieObj.directors.push(actor_info)
-        }
-        else if(role==="Writer"){
-            movieObj.writers.push(actor_info)
-        }
-        else{
-            movieObj.actors.push(complete_info)
-        }
-        if(i===24){
-            break;
-        }
+      let role = full_cast[i].role;
+      let actor_info = full_cast[i].actor;
+      let complete_info = {};
+      complete_info.role = role;
+      complete_info.actor_info = actor_info;
+
+      if (role === "Director") {
+        movieObj.directors.push(actor_info);
+      } else if (role === "Writer") {
+        movieObj.writers.push(actor_info);
+      } else {
+        movieObj.actors.push(complete_info);
+      }
+      if (i === 14) {
+        break;
+      }
     }
 
     let insertedData = await MovieModel.create(movieObj);
     res.json(insertedData);
   }
 });
+
+movieRoutes.get('/nowplaying',async(req,res)=>{
+  let response = await axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_API_KEY}`)
+  res.json(response.data.results)
+})
+
+movieRoutes.get('/toprated',async(req,res)=>{
+  let response = await axios.get('https://data-imdb1.p.rapidapi.com/movie/order/byRating/',{
+    headers: {
+      'x-rapidapi-host': 'data-imdb1.p.rapidapi.com',
+      'x-rapidapi-key': `${process.env.RAPID_API_KEY}`
+    }
+  })
+  res.json(response.data.results)
+})
+
+movieRoutes.get('/upcoming',async(req,res)=>{
+  let response = await axios.get('https://data-imdb1.p.rapidapi.com/movie/order/upcoming/',{
+    headers: {
+      'x-rapidapi-host': 'data-imdb1.p.rapidapi.com',
+      'x-rapidapi-key': `${process.env.RAPID_API_KEY}`
+    }
+  })
+  res.json(response.data.results)
+})
+
+movieRoutes.get('/search',async(req,res)=>{
+  let query = req.query.query
+  let response = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${query}&page=1`)
+  res.json(response.data)
+})
 
 module.exports = movieRoutes;

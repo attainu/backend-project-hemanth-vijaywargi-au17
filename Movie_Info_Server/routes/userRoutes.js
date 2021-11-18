@@ -51,7 +51,7 @@ userRoutes.post("/login", async (req, res) => {
       // Generate a token
       const secret = "This is my secret key";
       const jwtToken = jwt.sign({ currentUser: data.email }, secret, {
-        expiresIn: "1d",
+        expiresIn: "10d",
       });
 
       res.json({

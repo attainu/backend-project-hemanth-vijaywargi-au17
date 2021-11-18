@@ -51,7 +51,6 @@ const MovieSchema = new mongoose.Schema({
   },
   rating: {
     type: String,
-    required: true,
   },
   actors: {
     type: [Object],
