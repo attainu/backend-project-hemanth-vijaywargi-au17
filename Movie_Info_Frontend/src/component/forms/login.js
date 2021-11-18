@@ -4,15 +4,15 @@ import "./login.css";
 const Login = () => {
   return (
     <div>
-      <div class="main">
-        <div class="container">
-          <div class="signup-content">
+      <div className="main">
+        <div className="container">
+          <div className="signup-content">
             <form method="POST" id="signup-form" class="signup-form">
               <h2>Login</h2>
-              <div class="form-group">
+              <div className="form-group">
                 <input
                   type="username"
-                  class="form-input"
+                  className="form-input"
                   name="username"
                   id="username"
                   placeholder="Username"
@@ -20,10 +20,10 @@ const Login = () => {
                 />
                 <small></small>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <input
                   type="text"
-                  class="form-input"
+                  className="form-input"
                   name="password"
                   id="password"
                   placeholder="Password"
@@ -31,13 +31,14 @@ const Login = () => {
                 />
                 <small></small>
               </div>
-              <button class="submit-form">
+              <button className="submit-form">
               <span></span>
               <span></span>
               <span></span>
               <span></span>
               Submit
             </button>
+            <span className="existing">Not a member<a href="/login">sign up</a></span>
             </form>
           </div>
         </div>
