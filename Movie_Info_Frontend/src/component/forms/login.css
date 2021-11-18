@@ -183,3 +183,10 @@ input {
   display: flex;
   font-size: larger;
 }
+a{
+  color:#03e9f4;
+}
+.message{
+  box-sizing: border-box;
+  color:#fff;
+}
