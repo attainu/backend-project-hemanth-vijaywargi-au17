@@ -1,7 +1,8 @@
 import { useState } from "react";
 import React from "react";
 import Joi from "joi";
-import "./login.css";
+
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,30 +11,28 @@ const Login = () => {
 
   const userSchema = Joi.object({
     email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
+      .email({ minDomainSegments: 2, tlds: {} })
       .required()
       .min(4)
       .lowercase()
       .label("E-Mail"),
-    pass: Joi.string()
-      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-      .required()
-      .min(6)
-      .label("Password"),
+    pass: Joi.string().required().min(6).max(16).label("Password"),
   });
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
     const result = userSchema.validate({ email: email, pass: password });
-    console.log(result);
-    console.log(result.error);
 
-    console.log(validationError.email);
     if (result.error) {
       setValidationError(result.error);
-    }
-    else{
-      setValidationError(result)
+      console.log(result.error);
+    } else {
+      let userExists = false;
+      if (!userExists) {
+        setValidationError({ message: "User Does Not Exist!" });
+      } else {
+        setValidationError("");
+      }
     }
   };
   return (
@@ -46,6 +45,7 @@ const Login = () => {
               id="signup-form"
               className="signup-form"
               onSubmit={handleSubmitForm}
+              noValidate
             >
               <h2>Login</h2>
               <div className="form-group">
@@ -83,7 +83,8 @@ const Login = () => {
                 Submit
               </button>
               <span className="existing">
-                Not a member<a href="/reg">sign up</a>
+                <span>Not a member ?</span>
+                <Link to='/signup'>Sign Up</Link>
               </span>
             </form>
           </div>
