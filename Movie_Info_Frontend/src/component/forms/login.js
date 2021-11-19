@@ -32,6 +32,9 @@ const Login = () => {
     if (result.error) {
       setValidationError(result.error);
     }
+    else{
+      setValidationError(result)
+    }
   };
   return (
     <div>
@@ -69,7 +72,7 @@ const Login = () => {
                   value={password}
                 />
               </div>
-              <div className="message">
+              <div className="form-group message">
                 {validationError.message}
               </div>
               <button className="submit-form">

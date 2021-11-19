@@ -5,8 +5,8 @@ import Registration from "./component/forms/reg";
 function App() {
   return (
     <div>
-      {/* <Registration /> */}
-      <Login/>
+      <Registration />
+      {/* <Login/> */}
     </div>
   );
 }
