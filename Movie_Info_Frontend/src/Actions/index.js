@@ -1,9 +1,15 @@
-import changeMessage from "../Actions/changeMessage";
-import changeColor from "../Actions/changeColor"
-import getTodos from "./getTodos"
+import getMovieById from "./getMovieById";
+import getActorById from "./getActorById";
+import getNowPlaying from "./getNowPlaying";
+import getTopRated from "./getTopRated";
+import getUpcoming from "./getUpcoming";
 
 const actions = {
-    changeMessage,changeColor,getTodos
-}
+  getMovieById,
+  getNowPlaying,
+  getTopRated,
+  getUpcoming,
+  getActorById,
+};
 
-export default actions
+export default actions;

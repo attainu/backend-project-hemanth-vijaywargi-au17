@@ -30,7 +30,7 @@ export default function NavBar() {
 
         {/*Search Form*/}
         <form className="flex items-center mr-28">
-          <div class="relative">
+          <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <button
                 type="submit"
@@ -52,9 +52,9 @@ export default function NavBar() {
             <input
               type="search"
               name="q"
-              class="py-2 text-sm bg-gray-400 text-gray-900 rounded-md pl-10 placeholder-gray-900"
+              className="py-2 text-sm bg-gray-400 text-gray-900 rounded-md pl-10 placeholder-gray-900"
               placeholder="Search..."
-              autocomplete="off"
+              autoComplete="off"
               value={query}
               onChange={(e)=>{setQuery(e.target.value)}}
             />

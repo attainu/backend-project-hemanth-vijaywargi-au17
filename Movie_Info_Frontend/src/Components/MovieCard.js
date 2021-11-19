@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function MovieCard() {
+export default function MovieCard(props) {
     return (
-        <div className="w-28 h-36 rounded bg-black">
-            
+        <div className="border-2 border-black text-lg">
+            {props.title}
         </div>
     )
 }

@@ -1,13 +1,16 @@
 import { combineReducers } from "redux";
+import movieReducer from "./movieReducer";
+import sectionReducer from "./sectionReducer";
+import actorReducer from "./actorReducer";
+import userReducer from "./userReducer";
 
-import colorReducer from "./colorReducer";
-import messageReducer from "./messageReducer";
-import todosReducer from "./todosReducer";
 
-const rootReducer = combineReducers({
-  color: colorReducer,
-  message: messageReducer,
-  todos: todosReducer,
-});
+const initialState = {
+  user : userReducer,
+  movies : movieReducer,
+  actors : actorReducer,
+  sections : sectionReducer
+}
+const rootReducer = combineReducers(initialState);
 
 export default rootReducer;
