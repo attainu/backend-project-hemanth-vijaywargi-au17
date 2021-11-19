@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { changeMessage } from "../Store";
+import actions from "../Actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ReduxExample() {
@@ -10,8 +10,9 @@ export default function ReduxExample() {
   const [input, setInput] = useState("");
 
   const handleClick = () => {
-    let action = changeMessage(input);
+    let action = actions.changeMessage(input);
     dispatcher(action);
+    dispatcher(actions.getTodos())
   };
 
   return (

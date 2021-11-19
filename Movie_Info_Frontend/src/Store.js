@@ -1,33 +1,15 @@
 // Importing Store Creator From Redux Package
-import { createStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 
-// Initial State
-const initialState = {
-  message: "This is the Redux Global State!",
-};
+import thunk from "redux-thunk";
+import rootReducer from "./Reducers";
 
-// Action Creator
-export const changeMessage = (message) => {
-    return {
-        type : "CHANGE_MESSAGE",
-        payload : message
-    }
-}
-
-// Reducer
-const reducer = (state = initialState, action) => {
-
-    if(action.type==="CHANGE_MESSAGE"){
-        return {
-            ...state,
-            message : action.payload
-        }
-    }
-
-    return state
-};
+const composedEnhancer = compose(
+  applyMiddleware(thunk),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 // Creating our Global State/Store
-const myAppStore = createStore(reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const myAppStore = createStore(rootReducer, composedEnhancer);
 
 export default myAppStore;
