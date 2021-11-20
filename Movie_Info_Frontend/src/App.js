@@ -10,7 +10,7 @@ import actions from "./Actions";
 function App() {
   let dispatcher = useDispatch();
   useEffect(() => {
-    // dispatcher(actions.getNowPlaying());
+    dispatcher(actions.getNowPlaying());
     // dispatcher(actions.getTopRated());
     // dispatcher(actions.getUpcoming());
     // dispatcher(actions.getActorById("nm0474774"));
