@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./Components/Home";
 import {Provider} from 'react-redux'
 import myAppStore from "./Store";
-import ReduxExample from './Components/ReduxExample'
+// import ReduxExample from './Components/ReduxExample'
 
 function App() {
 
@@ -18,7 +18,6 @@ function App() {
           <Route path="/" element={<Home/>} />
         </Routes>
       </BrowserRouter>
-      <ReduxExample/>
     </Provider>
   );
 }

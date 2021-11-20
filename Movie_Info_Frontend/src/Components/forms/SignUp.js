@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Joi from "joi";
 import { Link } from "react-router-dom";
+// import './login.css'
 
 const SignUp = () => {
   const [username, setUsername] = useState("");

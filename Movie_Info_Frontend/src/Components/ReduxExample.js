@@ -6,6 +6,7 @@ export default function ReduxExample() {
   let message = useSelector((state) => {
     return state.message;
   });
+  
   let dispatcher = useDispatch();
   const [input, setInput] = useState("");
 
