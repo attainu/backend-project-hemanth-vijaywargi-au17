@@ -114,6 +114,7 @@ function Home() {
           </div>
         </div> */}
       </div>
+      <MovieCard/>
     </>
   );
 }
