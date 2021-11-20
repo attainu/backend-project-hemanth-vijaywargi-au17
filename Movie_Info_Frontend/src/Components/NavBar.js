@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const [query,setQuery] = useState("")
+  const handleSearch = () => {
+    console.log(query)
+  }
   
   return (
     <div className="flex justify-between bg-gray-900 py-3 px-16 text-gray-400 font-bold">
       {/*Nav Brand*/}
-      <div className="flex items-center space-x-4">
+      <Link className="flex items-center space-x-4" to="/">
         <svg
           className="w-16 h-16 hover:text-white"
           fill="none"
@@ -23,17 +26,17 @@ export default function NavBar() {
           ></path>
         </svg>
         <h1 className="text-3xl font-bold ">Movie Info App</h1>
-      </div>
+      </Link>
       
       {/*Navigation*/}
       <nav className="flex">
 
         {/*Search Form*/}
-        <form className="flex items-center mr-28">
+        <div className="flex items-center mr-28">
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <button
-                type="submit"
+              onClick={handleSearch}
                 className="p-1 focus:outline-none focus:shadow-outline"
               >
                 <svg
@@ -57,9 +60,14 @@ export default function NavBar() {
               autoComplete="off"
               value={query}
               onChange={(e)=>{setQuery(e.target.value)}}
+              onKeyPress={(e)=>{
+                if(e.key === "Enter"){
+                  handleSearch()
+                }
+              }}
             />
           </div>
-        </form>
+        </div>
 
         {/*Links*/}
         <div className="flex items-center space-x-1">
