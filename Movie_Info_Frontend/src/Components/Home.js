@@ -92,9 +92,7 @@ function Home() {
         {/* <div>
           <h2 className="text-4xl">Now Playing</h2>
           <div className="flex flex-wrap gap-3">
-            {now_playing.map((movie) => {
-              return <MovieCard data={movie} />;
-            })}
+            <MovieCard/>
           </div>
         </div> */}
         {/*Top Rated*/}

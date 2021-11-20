@@ -1,5 +1,4 @@
 {
-  "proxy": "http://localhost:5000",
   "name": "movieapp",
   "version": "0.1.0",
   "private": true,
