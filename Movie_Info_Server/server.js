@@ -2,6 +2,7 @@
 require('dotenv').config()
 const express = require("express");
 const fileUpload = require("express-fileupload");
+const morgan = require("morgan")
 
 // Server
 const app = express();
@@ -11,6 +12,7 @@ const port = process.env.PORT;
 app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
+app.use(morgan('dev'))
 
 // Database
 const dbHelper = require("./db.js");

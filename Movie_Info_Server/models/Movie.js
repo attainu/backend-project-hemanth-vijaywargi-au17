@@ -4,35 +4,27 @@ const mongoose = require("mongoose");
 const MovieSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   overview: {
     type: String,
-    required: true,
   },
   runtime: {
     type: String,
-    required: true,
   },
   poster_path: {
     type: String,
-    required: true,
   },
   backdrop_path: {
     type: String,
-    required: true,
   },
   release_date: {
     type: String,
-    required: true,
   },
   adult: {
     type: Boolean,
-    required: true,
   },
   TMDB_id: {
     type: String,
-    required: true,
   },
   IMDB_id: {
     type: String,
@@ -40,17 +32,15 @@ const MovieSchema = new mongoose.Schema({
   },
   genres: {
     type: [String],
-    required: true,
   },
   trailer_link: {
     type: String,
   },
   language: {
     type: String,
-    required: true,
   },
   rating: {
-    type: String,
+    type: Number,
   },
   actors: {
     type: [Object],
