@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 function MovieCard(props) {
   let details = props.movies[props.id];
@@ -18,7 +19,7 @@ function MovieCard(props) {
   return (
     <>
       {details !== undefined ? (
-        <div className="rounded overflow-hidden shadow-lg max-w-sm w-40 text-center inline-flex flex-col justify-between items-center bg-gray-800 pb-2">
+        <Link to={`/movieinfo/${props.id}`} className="rounded overflow-hidden shadow-lg max-w-sm w-40 text-center inline-flex flex-col justify-between items-center bg-gray-800 pb-2">
           <img
             src={details.poster_path}
             alt="Not available"
@@ -33,7 +34,7 @@ function MovieCard(props) {
           >
             {details.rating===0?"NA":details.rating}
           </div>
-        </div>
+        </Link>
       ) : null}
     </>
   );

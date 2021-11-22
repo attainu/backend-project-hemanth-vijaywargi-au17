@@ -47,22 +47,6 @@ const userReducer = (state = initialState, action) => {
     };
   }
 
-  if (action.type === "ADD_TO_WATCHLIST") {
-    return {
-      ...state,
-      watchlist: [...state.watchlist,action.payload],
-    };
-  }
-
-  if (action.type === "REMOVE_FROM_WATCHLIST") {
-    let newList = [...state.watchlist]
-    newList.remove(action.payload)
-    return {
-      ...state,
-      watchlist: newList
-    };
-  }
-
   return state;
 };
 

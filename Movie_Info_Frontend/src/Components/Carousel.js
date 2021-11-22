@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 function Carousel(props) {
@@ -12,7 +12,6 @@ function Carousel(props) {
       now_playing_movies.push(movie);
     }
   }
-  console.log(now_playing_movies[currImg].backdrop_path)
   return (
     <>
       {now_playing_movies.length !== 0 ? (

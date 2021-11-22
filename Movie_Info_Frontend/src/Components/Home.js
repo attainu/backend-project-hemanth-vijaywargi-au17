@@ -10,7 +10,7 @@ function Home() {
 
   return (
     <>
-      {/* <Carousel /> */}
+      <Carousel />
       <div className="bg-gray-900 text-white space-y-5 py-4">
         {/*Now Playing*/}
         <div>

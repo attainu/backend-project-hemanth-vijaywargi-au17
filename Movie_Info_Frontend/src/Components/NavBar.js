@@ -82,7 +82,9 @@ function NavBar(props) {
               Log out
             </div>
 
-            <Link className="hover:bg-hover px-3 py-2 rounded" to="/watchlist">Watch List</Link>
+            <Link className="hover:bg-hover px-3 py-2 rounded" to="/watchlist"
+              onClick={props.getWatchList}
+            >Watch List</Link>
           </div>
         ) : (
           <div className="flex items-center space-x-1">
@@ -111,6 +113,7 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => {
       dispatch(actions.userLogOut());
     },
+    getWatchList : ()=>{dispatch(actions.getWatchlist())}
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

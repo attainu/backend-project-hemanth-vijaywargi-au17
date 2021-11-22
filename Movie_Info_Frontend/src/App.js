@@ -4,30 +4,48 @@ import SignUp from "./Components/forms/SignUp";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Components/Home";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import actions from "./Actions";
 import NavBar from "./Components/NavBar";
 import WatchList from "./Components/WatchList";
+import MovieInfo from './Components/MovieInfo';
+import ScrollToTop from './Components/ScrollToTop'
 
-function App() {
+function App(props) {
   let dispatcher = useDispatch();
   useEffect(() => {
     dispatcher(actions.getNowPlaying());
     dispatcher(actions.getTopRated());
     dispatcher(actions.getUpcoming());
+    if(props.isLoggedIn){
+      dispatcher(actions.getWatchlist())
+    }
   }, []);
 
   return (
     <BrowserRouter>
       <NavBar />
+      <ScrollToTop/>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<Home />} />
         <Route path="/watchlist" element={<WatchList />} />
+        <Route path="/movieinfo/:id" element={<MovieInfo />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.user.isLoggedIn,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+

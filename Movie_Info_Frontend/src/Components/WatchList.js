@@ -1,4 +1,3 @@
-import React from "react";
 import { connect } from "react-redux";
 import { Navigate } from "react-router";
 import MovieCard from "./MovieCard";
@@ -8,7 +7,7 @@ function WatchList(props) {
     return <Navigate to="/login" />;
   }
   return (
-    <div className="bg-gray-900 h-screen text-white px-20 py-6">
+    <div className="bg-gray-900 text-white px-20 py-6">
       <h2 className="text-4xl text-center font-bold">Your WatchList</h2>
       <div className="flex flex-wrap  gap-3 m-5">
         {props.watchList.map((movieId)=>{
@@ -27,7 +26,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WatchList);
