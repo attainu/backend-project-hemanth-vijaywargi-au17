@@ -31,15 +31,14 @@ function MovieInfo(props) {
         break;
       }
     }
-    
-    actors = actors.join(" , ")
+
+    actors = actors.join(" , ");
 
     writers = movie.writers
       .map((writer) => {
         return writer.name;
       })
       .join(" , ");
-
   }
 
   let [watchListBtn, setWatchListBtn] = useState(
@@ -100,22 +99,25 @@ function MovieInfo(props) {
             </div>
           </div>
           <div className="pt-3 ml-10 text-white">
+            {movie.tagline.length !== 0 ? (
+              <div className="my-3 text-xl">{movie.tagline}</div>
+            ) : null}
             <label>{movie.overview}</label>
           </div>
           <div className="p-5 text-white text-opacity-50">
             <button
-              className="m-4 p-1 bg-blue-900 rounded"
+              className="m-4 p-2 bg-blue-900 rounded hover:text-white"
               onClick={handleWatchListBtn}
             >
               {watchListBtn}
             </button>
             <a href="#trailer">
-              <button className="m-4 p-1 bg-blue-900 rounded">
+              <button className="m-4 p-2 bg-blue-900 rounded hover:text-white">
                 Watch trailer
               </button>
             </a>
           </div>
-          <div className="ml-10 m-2 text-opacity-50 text-white">
+          <div className="ml-10 m-2 text-opacity-50 text-white space-y-3">
             <div className="flex space-x-3">
               <div>Starring : </div>
               <div>{actors}</div>
@@ -130,7 +132,11 @@ function MovieInfo(props) {
             </div>
             <div className="flex space-x-3">
               <div>Genre : </div>
-              <div>{movie.genres.join(' , ')}</div>
+              <div>{movie.genres.join(" , ")}</div>
+            </div>
+            <div className="flex space-x-3">
+              <div>Language : </div>
+              <div>{movie.language}</div>
             </div>
           </div>
 
