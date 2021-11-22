@@ -6,6 +6,8 @@ import Home from "./Components/Home";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import actions from "./Actions";
+import NavBar from "./Components/NavBar";
+import WatchList from "./Components/WatchList";
 
 function App() {
   let dispatcher = useDispatch();
@@ -17,10 +19,12 @@ function App() {
 
   return (
     <BrowserRouter>
+      <NavBar />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<Home />} />
+        <Route path="/watchlist" element={<WatchList />} />
       </Routes>
     </BrowserRouter>
   );

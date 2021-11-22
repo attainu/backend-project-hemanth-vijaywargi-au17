@@ -1,5 +1,4 @@
 import MovieCard from "./MovieCard";
-import NavBar from "./NavBar";
 import React from "react";
 import { useSelector } from "react-redux";
 import Carousel from "./Carousel";
@@ -11,7 +10,6 @@ function Home() {
 
   return (
     <>
-      <NavBar />
       {/* <Carousel /> */}
       <div className="bg-gray-900 text-white space-y-5 py-4">
         {/*Now Playing*/}

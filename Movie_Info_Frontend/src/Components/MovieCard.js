@@ -1,31 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 
-export default function MovieCard(props) {
-  const [ratingColor, setRatingColor] = useState("");
-  let details = useSelector((state) => {
-    let movies = state.movies;
-    return movies[props.id];
-  });
+function MovieCard(props) {
+  let details = props.movies[props.id];
 
   const determineColor = (rating) => {
-    if (rating < 5) {
-      setRatingColor("hsl(0,100%,40%)");
+    if (rating < 5 && rating > 0) {
+      return "hsl(0,100%,40%)";
     } else if (rating >= 5 && rating <= 7) {
-      setRatingColor("hsl(60,100%,30%)");
-    } else if(rating===0){
-      setRatingColor("");
-    }else{
-      setRatingColor("green")
+      return "hsl(60,100%,30%)";
+    } else if (rating === 0) {
+      return "";
+    } else {
+      return "green";
     }
   };
-
-  // Component Did Update
-  useEffect(() => {
-    if (details !== undefined) {
-      determineColor(details.rating);
-    }
-  });
 
   return (
     <>
@@ -40,13 +28,25 @@ export default function MovieCard(props) {
           <div
             className="bg-gray-500 rounded-full px-3 py-1 mb-2 text-small text-white font-bold p-2 w-20"
             style={{
-              backgroundColor: ratingColor,
+              backgroundColor: determineColor(details.rating),
             }}
           >
-            {details.rating}
+            {details.rating===0?"NA":details.rating}
           </div>
         </div>
       ) : null}
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    movies: state.movies,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieCard);

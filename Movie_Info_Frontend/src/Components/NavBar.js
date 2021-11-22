@@ -1,12 +1,14 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import actions from "../Actions";
 
-export default function NavBar() {
-  const [query,setQuery] = useState("")
+function NavBar(props) {
+  const [query, setQuery] = useState("");
   const handleSearch = () => {
-    console.log(query)
-  }
-  
+    console.log(query);
+  };
+
   return (
     <div className="flex justify-between bg-gray-900 py-3 px-16 text-gray-400 font-bold">
       {/*Nav Brand*/}
@@ -27,16 +29,15 @@ export default function NavBar() {
         </svg>
         <h1 className="text-3xl font-bold ">Movie Info App</h1>
       </Link>
-      
+
       {/*Navigation*/}
       <nav className="flex">
-
         {/*Search Form*/}
         <div className="flex items-center mr-28">
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
               <button
-              onClick={handleSearch}
+                onClick={handleSearch}
                 className="p-1 focus:outline-none focus:shadow-outline"
               >
                 <svg
@@ -59,10 +60,12 @@ export default function NavBar() {
               placeholder="Search..."
               autoComplete="off"
               value={query}
-              onChange={(e)=>{setQuery(e.target.value)}}
-              onKeyPress={(e)=>{
-                if(e.key === "Enter"){
-                  handleSearch()
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
                 }
               }}
             />
@@ -70,13 +73,44 @@ export default function NavBar() {
         </div>
 
         {/*Links*/}
-        <div className="flex items-center space-x-1">
-          <Link className="hover:bg-hover px-3 py-2 rounded" to="/login">Login</Link>
+        {props.isLoggedIn ? (
+          <div className="flex items-center space-x-1">
+            <div
+              className="hover:bg-hover px-3 py-2 rounded cursor-pointer"
+              onClick={props.logout}
+            >
+              Log out
+            </div>
 
-          <Link className="hover:bg-hover px-3 py-2 rounded" to="/signup">Sign Up</Link>
-        </div>
+            <Link className="hover:bg-hover px-3 py-2 rounded" to="/watchlist">Watch List</Link>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-1">
+            <Link className="hover:bg-hover px-3 py-2 rounded" to="/login">
+              Login
+            </Link>
 
+            <Link className="hover:bg-hover px-3 py-2 rounded" to="/signup">
+              Sign Up
+            </Link>
+          </div>
+        )}
       </nav>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isLoggedIn: state.user.isLoggedIn,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      dispatch(actions.userLogOut());
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

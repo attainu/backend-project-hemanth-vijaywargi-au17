@@ -129,6 +129,7 @@ const SignUp = () => {
           </div>
         </div>
       </div>
+      <Link to="/">Go to Home</Link>
     </div>
   );
 };

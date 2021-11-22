@@ -57,7 +57,7 @@ userRoutes.post("/login", async (req, res) => {
       res.json({
         error: false,
         message: "User Logged in Successfully!",
-        token: jwtToken,
+        token: jwtToken
       });
       return;
     }
