@@ -38,7 +38,7 @@ const Login = (props) => {
   return (
     <div>
       <div className="font-semibold w-full h-screen text-textcolor main ">
-        <div className="container flex justify-end pt-32 p-4 ">
+        <div className="container flex justify-end">
           <div className="signup-content bg-backgroundColor">
             <form
               method="POST"
