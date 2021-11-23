@@ -9,7 +9,8 @@ import actions from "./Actions";
 import NavBar from "./Components/NavBar";
 import WatchList from "./Components/WatchList";
 import MovieInfo from './Components/MovieInfo';
-import ScrollToTop from './Components/ScrollToTop'
+import ScrollToTop from './Components/ScrollToTop';
+import Cast from './Components/Cast'
 
 function App(props) {
   let dispatcher = useDispatch();
@@ -32,6 +33,7 @@ function App(props) {
         <Route path="/" element={<Home />} />
         <Route path="/watchlist" element={<WatchList />} />
         <Route path="/movieinfo/:id" element={<MovieInfo />} />
+        <Route path="/cast" element={<Cast />} />
       </Routes>
     </BrowserRouter>
   );
