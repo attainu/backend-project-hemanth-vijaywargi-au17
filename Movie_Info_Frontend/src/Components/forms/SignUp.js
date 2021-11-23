@@ -12,7 +12,7 @@ const SignUp = (props) => {
   const [image, setImage] = useState(null);
   const [validationError, setValidationError] = useState("");
   if (props.error_message === "Sign Up SuccessFull!") {
-    props.clear_message()
+    props.clear_message();
     return <Navigate to="/login" />;
   }
   const userSchema = Joi.object({
@@ -66,7 +66,7 @@ const SignUp = (props) => {
               noValidate
             >
               <h2>Sign Up</h2>
-              <div className="form-group h-full">
+              <div className="form-group h-full mt-5">
                 <input
                   type="username"
                   className="form-input"
@@ -150,23 +150,25 @@ const SignUp = (props) => {
               <div className="message">
                 {validationError.message || props.error_message}
               </div>
-              <button className="submit-form float-left">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                Register
-              </button>
-              <div>
-              <span className="existing float-center pt-3">
-                <span className="text-white">Already a Member ?</span>
-                <Link to="/login" className="linking">Log In</Link>
-              </span>
+
+              <div className="flex items-center space-x-3 ">
+                <button className="submit-form font-bold">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  Register
+                </button>
+
+                <div className="text-white">Already a Member ?</div>
+                <Link to="/login" className="text-blue">
+                  Log In
+                </Link>
               </div>
             </form>
           </div>
-          </div>
         </div>
+      </div>
     </div>
   );
 };

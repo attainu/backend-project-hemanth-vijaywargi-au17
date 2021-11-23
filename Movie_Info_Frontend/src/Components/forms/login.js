@@ -92,7 +92,7 @@ const Login = (props) => {
               </button>
               <span className="existing">
                 <span className="text-white">Not a member ?</span>
-                <Link to="/signup" className="linking">Sign Up</Link>
+                <Link to="/signup" className="text-blue ml-5">Sign Up</Link>
               </span>
             </form>
           </div>

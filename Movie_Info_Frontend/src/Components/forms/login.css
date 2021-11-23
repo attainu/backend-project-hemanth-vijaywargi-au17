@@ -162,11 +162,6 @@
   font-size: larger;
 }
 
-.linking{
-  color:#01bac4;
-  margin-left:10px ;
-  text-decoration: none;
-}
 
 .message{
   box-sizing: border-box;
@@ -193,11 +188,16 @@
 
 .signupcontainer {
   width: 1125px;
-  padding-top:90px;
+  padding-top:70px;
+  padding-bottom: 10px;
   background-image: url("images/container-bg.png");
   overflow: hidden;
+
 }
 
 .effect{
   filter: blur(5px);
+}
+.text-blue{
+  color:#03e9f4;
 }
