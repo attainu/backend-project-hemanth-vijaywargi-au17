@@ -1,5 +1,4 @@
 import axios from "axios";
-import actions from ".";
 
 // Action Creator
 const userSignUp = (userName,userEmail, userPassword,userImage) => {
