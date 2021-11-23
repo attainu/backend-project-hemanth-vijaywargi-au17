@@ -98,7 +98,6 @@ const Login = (props) => {
             </form>
           </div>
         </div>
-        <Link to="/" className="linking float-right font-bold mr-5"> Go to Home </Link>
       </div>
     </div>
   );

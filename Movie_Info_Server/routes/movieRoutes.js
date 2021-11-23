@@ -22,9 +22,15 @@ movieRoutes.get("/by_id", async (req, res) => {
       let movieObj = {
         name: m.title,
         overview: m.overview || "",
-        runtime: m.runtime || "" + " mins",
-        poster_path: m.poster_path!==null ? `https://image.tmdb.org/t/p/original${m.poster_path}` : "",
-        backdrop_path: m.backdrop_path!==null ? `https://image.tmdb.org/t/p/original${m.backdrop_path}` : "",
+        runtime: m.runtime + " mins" || "",
+        poster_path:
+          m.poster_path !== null
+            ? `https://image.tmdb.org/t/p/original${m.poster_path}`
+            : "",
+        backdrop_path:
+          m.backdrop_path !== null
+            ? `https://image.tmdb.org/t/p/original${m.backdrop_path}`
+            : "",
         release_date: m.release_date || "",
         adult: m.adult,
         TMDB_id: m.id,
@@ -32,13 +38,27 @@ movieRoutes.get("/by_id", async (req, res) => {
         genres: m.genres.map((genre) => {
           return genre.name;
         }),
-        language: m.spoken_languages[0].english_name || "",
+        languages:
+          m.spoken_languages.map((language) => {
+            return language.english_name;
+          }) || [],
         rating: m.vote_average || "",
         trailer_link: "",
         actors: [],
         directors: [],
         writers: [],
         tagline: m.tagline || "",
+        production_companies:
+          m.production_companies.map((company) => {
+            return {
+              name: company.name,
+              logo_path: company.logo_path
+                ? `https://image.tmdb.org/t/p/original${company.logo_path}`
+                : "",
+              origin_country: company.origin_country,
+              id: company.id,
+            };
+          }) || [],
       };
 
       // Get Movie Trailer
@@ -90,7 +110,6 @@ movieRoutes.get("/by_id", async (req, res) => {
       }
       let insertedData = await MovieModel.create(movieObj);
       res.json(insertedData);
-
     } catch (error) {
       res.json({
         error: true,

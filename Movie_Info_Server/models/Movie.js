@@ -36,8 +36,8 @@ const MovieSchema = new mongoose.Schema({
   trailer_link: {
     type: String,
   },
-  language: {
-    type: String,
+  languages: {
+    type: [String],
   },
   rating: {
     type: Number,
@@ -59,6 +59,9 @@ const MovieSchema = new mongoose.Schema({
   },
   tagline:{
     type:String
+  },
+  production_companies:{
+    type:[Object]
   }
 });
 
