@@ -4,21 +4,25 @@ import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import actions from "../Actions";
 import { useState } from "react";
+import ActorCard from "./ActorCard";
 
 function MovieInfo(props) {
   let params = useParams();
   let id = params.id;
   let movie = props.movies[id];
+  let [playing, setPlaying] = useState(false);
 
   let writers;
   let directors;
   let actors;
   let languages;
   let production_companies;
+  let actorComponents;
 
   if (movie === undefined) {
     props.getMovieById(id);
   } else {
+    props.getActorsInfo(movie.actors);
     directors = movie.directors
       .map((director) => {
         return director.name;
@@ -58,6 +62,21 @@ function MovieInfo(props) {
         production_companies.push(logo);
       }
     }
+
+    actorComponents = [];
+    for (let i = 0; i < movie.actors.length; i++) {
+      let actorInfo = props.actors[movie.actors[i].actor_info.imdb_id];
+      if (actorInfo !== undefined) {
+        actorComponents.push(
+          <ActorCard details={actorInfo} role={movie.actors[i].role} />
+        );
+      } else {
+        actorComponents.push(null);
+      }
+      if(i===10){
+        break;
+      }
+    }
   }
 
   let [watchListBtn, setWatchListBtn] = useState(
@@ -94,7 +113,7 @@ function MovieInfo(props) {
             <img src={movie.backdrop_path} alt="Not Available" />
           </div>
           <div>
-            <div className="w-full font-extrabold mb-3  p-5 pl-0 ml-10 text-white text-2xl">
+            <div className="w-full font-extrabold mb-3  p-5 pl-0 ml-10 text-white text-3xl">
               {movie.name}
             </div>
             <div className="p-3 text-white pl-0 ml-8 space-x-2">
@@ -134,7 +153,12 @@ function MovieInfo(props) {
               {watchListBtn}
             </button>
             <a href="#trailer">
-              <button className="m-4 p-2 bg-blue-900 rounded hover:text-white">
+              <button
+                className="m-4 p-2 bg-blue-900 rounded hover:text-white"
+                onClick={() => {
+                  setPlaying(!playing);
+                }}
+              >
                 Watch trailer
               </button>
             </a>
@@ -165,21 +189,33 @@ function MovieInfo(props) {
               <span>{languages}</span>
             </div>
           </div>
-
-          <div
-            className="h-screen w-full flex justify-center items-center"
-            id="trailer"
-          >
-            <ReactPlayer
-              width="95%"
-              height="95%"
-              url={`https://www.youtube.com/embed/${movie.trailer_link}`}
-              controls={true}
-            ></ReactPlayer>
-          </div>
+          {/*Cast Section*/}
+          {actorComponents.length !== 0 ? (
+            <div className="my-3">
+              <h2 className="text-4xl my-2 text-white text-center">Cast</h2>
+              <div className="flex flex-wrap justify-center">
+                {actorComponents}
+              </div>
+            </div>
+          ) : null}
+          {movie.trailer_link !== "" ? (
+            <div
+              className="h-screen w-full flex justify-center items-center flex-col"
+              id="trailer"
+            >
+              <h2 className="text-4xl text-white text-center my-4">Trailer</h2>
+              <ReactPlayer
+                width="75%"
+                height="75%"
+                url={`https://www.youtube.com/embed/${movie.trailer_link}`}
+                controls={true}
+                playing={playing}
+              ></ReactPlayer>
+            </div>
+          ) : null}
           {production_companies.length !== 0 ? (
-            <div className="flex space-x-3 items-center text-white ml-10 m-2">
-              <span>Produced By </span>
+            <div className="flex space-y-3 items-center flex-col text-white mb-10">
+              <div className="text-2xl">Produced By </div>
               <div className="flex flex-wrap space-x-4">
                 {production_companies}
               </div>
@@ -208,6 +244,11 @@ const mapDispatchToProps = (dispatch) => {
     addToWatchList: (id) => {
       dispatch(actions.addToWatchList(id));
       dispatch(actions.getWatchlist());
+    },
+    getActorsInfo: (actors) => {
+      actors.forEach((actor) => {
+        dispatch(actions.getActorById(actor.actor_info.imdb_id));
+      });
     },
     removeFromWatchList: (id) => {
       dispatch(actions.removeFromWatchList(id));

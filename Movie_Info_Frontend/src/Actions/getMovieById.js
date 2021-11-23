@@ -1,5 +1,4 @@
 import axios from "axios";
-import actions from ".";
 
 // Action Creator
 const getMovieById = (id) => {
@@ -19,11 +18,6 @@ const getMovieById = (id) => {
           type: "GET_MOVIE",
           payload: response.data[0],
         });
-        // if (response.data[0].actors !== undefined) {
-        //   response.data[0].actors.forEach((actor) => {
-        //     dispatch(actions.getActorById(actor.actor_info.imdb_id));
-        //   });
-        // }
       }
     }
   };
