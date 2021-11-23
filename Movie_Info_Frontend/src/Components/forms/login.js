@@ -9,7 +9,6 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
-
   if (props.isLoggedIn) {
     return <Navigate to="/" />;
   }
@@ -98,7 +97,6 @@ const Login = (props) => {
             </form>
           </div>
         </div>
-        <Link to="/" className="linking float-right font-bold mr-5"> Go to Home </Link>
       </div>
     </div>
   );

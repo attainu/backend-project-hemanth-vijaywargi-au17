@@ -1,18 +1,30 @@
 import axios from "axios";
+import actions from ".";
 
 // Action Creator
 const getMovieById = (id) => {
   return async (dispatch, getState) => {
-    let response = await axios.get(`/movie/by_id?id=${id}`);
-    if (response.data.error || response.data.length === 0 || (id in getState().movies)) {
+    if (id in getState().movies) {
       dispatch({
-        type: "FALTU_ACTION",
+        type: "MOVIE_DATA_ALREADY_PRESENT",
       });
     } else {
-      dispatch({
-        type: "GET_MOVIE",
-        payload: response.data[0],
-      });
+      let response = await axios.get(`/movie/by_id?id=${id}`);
+      if (response.data.error || response.data.length === 0) {
+        dispatch({
+          type: "MOVIE_DATA_NOT_FOUND",
+        });
+      } else {
+        dispatch({
+          type: "GET_MOVIE",
+          payload: response.data[0],
+        });
+        if (response.data[0].actors !== undefined) {
+          response.data[0].actors.forEach((actor) => {
+            dispatch(actions.getActorById(actor.actor_info.imdb_id));
+          });
+        }
+      }
     }
   };
 };

@@ -8,6 +8,7 @@ import userLogOut from "./userLogOut";
 import getWatchlist from "./getWatchlist";
 import addToWatchList from "./addToWatchlist";
 import removeFromWatchList from "./removeFromWatchlist";
+import userSignUp from "./userSignUp";
 
 const actions = {
   getMovieById,
@@ -19,7 +20,8 @@ const actions = {
   userLogOut,
   getWatchlist,
   addToWatchList,
-  removeFromWatchList
+  removeFromWatchList,
+  userSignUp
 };
 
 export default actions;

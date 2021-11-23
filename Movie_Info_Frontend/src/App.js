@@ -4,7 +4,7 @@ import SignUp from "./Components/forms/SignUp";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Components/Home";
 import { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import actions from "./Actions";
 import NavBar from "./Components/NavBar";
 import WatchList from "./Components/WatchList";
@@ -13,16 +13,12 @@ import ScrollToTop from './Components/ScrollToTop';
 import Cast from './Components/Cast'
 
 function App(props) {
-  let dispatcher = useDispatch();
-  useEffect(() => {
-    dispatcher(actions.getNowPlaying());
-    dispatcher(actions.getTopRated());
-    dispatcher(actions.getUpcoming());
-    if(props.isLoggedIn){
-      dispatcher(actions.getWatchlist())
-    }
-  }, []);
+  let {getAllSections} = props
 
+  useEffect(()=>{
+    getAllSections()
+  },[getAllSections])
+  
   return (
     <BrowserRouter>
       <NavBar />
@@ -47,6 +43,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getAllSections : () => {
+      dispatch(actions.getNowPlaying());
+      dispatch(actions.getTopRated());
+      dispatch(actions.getUpcoming());
+    },
+    getWatchlist : () => {
+      dispatch(actions.getWatchlist())
+    }
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

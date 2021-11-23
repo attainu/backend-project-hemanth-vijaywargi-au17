@@ -32,7 +32,7 @@ function NavBar(props) {
 
       {/*Navigation*/}
       <nav className="flex">
-        {/*Search Form*/}
+        {/*Search*/}
         <div className="flex items-center mr-28">
           <div className="relative">
             <span className="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -83,7 +83,7 @@ function NavBar(props) {
             </div>
 
             <Link className="hover:bg-hover px-3 py-2 rounded" to="/watchlist"
-              onClick={props.getWatchList}
+              onClick={props.getWatchlist}
             >Watch List</Link>
           </div>
         ) : (
@@ -113,7 +113,8 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => {
       dispatch(actions.userLogOut());
     },
-    getWatchList : ()=>{dispatch(actions.getWatchlist())}
+    getWatchlist : ()=>{dispatch(actions.getWatchlist())}
   };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

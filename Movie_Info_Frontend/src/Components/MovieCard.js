@@ -2,15 +2,15 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 function MovieCard(props) {
-  let details = props.movies[props.id];
+  let movie = props.movies[props.id];
 
   const determineColor = (rating) => {
-    if (rating < 5 && rating > 0) {
+    if (rating === null) {
+      return "";
+    } else if (rating < 5) {
       return "hsl(0,100%,40%)";
     } else if (rating >= 5 && rating <= 7) {
       return "hsl(60,100%,30%)";
-    } else if (rating === 0) {
-      return "";
     } else {
       return "green";
     }
@@ -18,21 +18,24 @@ function MovieCard(props) {
 
   return (
     <>
-      {details !== undefined ? (
-        <Link to={`/movieinfo/${props.id}`} className="rounded overflow-hidden shadow-lg max-w-sm w-40 text-center inline-flex flex-col justify-between items-center bg-gray-800 pb-2">
+      {movie !== undefined ? (
+        <Link
+          to={`/movieinfo/${props.id}`}
+          className="rounded overflow-hidden shadow-lg max-w-sm w-40 text-center inline-flex flex-col justify-between items-center bg-gray-800 pb-2"
+        >
           <img
-            src={details.poster_path}
+            src={movie.poster_path}
             alt="Not available"
             className="w-full h-60"
           />
-          <div className="font-bold text-sm mb-2 p-2">{details.name}</div>
+          <div className="font-bold text-sm mb-2 p-2">{movie.name}</div>
           <div
             className="bg-gray-500 rounded-full px-3 py-1 mb-2 text-small text-white font-bold p-2 w-20"
             style={{
-              backgroundColor: determineColor(details.rating),
+              backgroundColor: determineColor(movie.rating),
             }}
           >
-            {details.rating===0?"NA":details.rating}
+            {movie.rating === null ? "Unrated" : movie.rating}
           </div>
         </Link>
       ) : null}

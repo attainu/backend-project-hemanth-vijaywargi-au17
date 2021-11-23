@@ -1,15 +1,20 @@
 import { useState } from "react";
-import React from "react";
 import Joi from "joi";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import actions from "../../Actions";
+import { connect } from "react-redux";
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
+  const [image, setImage] = useState(null);
   const [validationError, setValidationError] = useState("");
-
+  if (props.error_message === "Sign Up SuccessFull!") {
+    props.clear_message()
+    return <Navigate to="/login" />;
+  }
   const userSchema = Joi.object({
     username: Joi.string()
       .alphanum()
@@ -18,16 +23,12 @@ const SignUp = () => {
       .required()
       .label("Username"),
     email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: {  } })
+      .email({ minDomainSegments: 2, tlds: {} })
       .required()
       .min(4)
       .lowercase()
       .label("E-Mail"),
-    pass: Joi.string()
-      .required()
-      .min(6)
-      .max(16)
-      .label("Password"),
+    pass: Joi.string().required().min(6).max(16).label("Password"),
     repeat_password: Joi.any()
       .label("Confirm password")
       .equal(Joi.ref("pass"))
@@ -43,13 +44,12 @@ const SignUp = () => {
       pass: password,
       repeat_password: confirmpassword,
     });
-    console.log(result);
-    console.log(result.error);
-    console.log(validationError.email);
+
     if (result.error) {
       setValidationError(result.error);
     } else {
-      setValidationError(result);
+      setValidationError("");
+      props.signup(username, email, password, image);
     }
   };
 
@@ -63,6 +63,7 @@ const SignUp = () => {
               id="signup-form"
               className="signup-form"
               onSubmit={handleSubmitForm}
+              noValidate
             >
               <h2>Sign Up</h2>
               <div className="form-group">
@@ -75,6 +76,10 @@ const SignUp = () => {
                   autoComplete="off"
                   onChange={(e) => setUsername(e.target.value)}
                   value={username}
+                  onClick={() => {
+                    props.clear_message();
+                    setValidationError("");
+                  }}
                 />
               </div>
               <div className="form-group">
@@ -87,6 +92,10 @@ const SignUp = () => {
                   autoComplete="off"
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
+                  onClick={() => {
+                    props.clear_message();
+                    setValidationError("");
+                  }}
                 />
               </div>
               <div className="form-group">
@@ -99,6 +108,10 @@ const SignUp = () => {
                   autoComplete="off"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
+                  onClick={() => {
+                    props.clear_message();
+                    setValidationError("");
+                  }}
                 />
               </div>
               <div className="form-group">
@@ -111,9 +124,32 @@ const SignUp = () => {
                   autoComplete="off"
                   onChange={(e) => setConfirmpassword(e.target.value)}
                   value={confirmpassword}
+                  onClick={() => {
+                    props.clear_message();
+                    setValidationError("");
+                  }}
                 />
               </div>
-              <div className=" message">{validationError.message}</div>
+              <div className="form-group">
+                <div className="text-blue-400 my-2">
+                  Upload your profile picture (optional)
+                </div>
+                <input
+                  type="file"
+                  className="form-input"
+                  name="userImage"
+                  onChange={(e) => {
+                    setImage(e.target.files[0]);
+                  }}
+                  onClick={() => {
+                    props.clear_message();
+                    setValidationError("");
+                  }}
+                />
+              </div>
+              <div className=" message">
+                {validationError.message || props.error_message}
+              </div>
               <button className="submit-form">
                 <span></span>
                 <span></span>
@@ -129,9 +165,27 @@ const SignUp = () => {
           </div>
         </div>
       </div>
-      <Link to="/">Go to Home</Link>
     </div>
   );
 };
 
-export default SignUp;
+const mapStateToProps = (state) => {
+  return {
+    error_message: state.user.signup_error_message,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clear_message: () => {
+      dispatch({
+        type: "CLEAR_ERROR_MESSAGE",
+      });
+    },
+    signup: (username, email, password, userImage) => {
+      dispatch(actions.userSignUp(username, email, password, userImage));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

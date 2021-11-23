@@ -99,7 +99,7 @@ userRoutes.post("/signup", async (req, res) => {
       const fileName = `${fileData.md5}-${fileData.name}`;
 
       // Path where the file is to be stored on the server.
-      const filePath = `${__dirname}/public/userImages/${fileName}`;
+      const filePath = `${__dirname}/../public/userImages/${fileName}`;
 
       // Saving the path/url of our file in text data
       data.imageURL = `/userImages/${fileName}`;

@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import "./Movie.css";
 import ReactPlayer from "react-player";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import actions from "../Actions";
 import { useState } from "react";
 
@@ -9,14 +9,15 @@ function MovieInfo(props) {
   let params = useParams();
   let id = params.id;
   let movie = props.movies[id];
-  let dispatcher = useDispatch();
 
   let writers;
   let directors;
   let actors;
+  let languages;
+  let production_companies;
 
   if (movie === undefined) {
-    dispatcher(actions.getMovieById(id));
+    props.getMovieById(id);
   } else {
     directors = movie.directors
       .map((director) => {
@@ -39,6 +40,24 @@ function MovieInfo(props) {
         return writer.name;
       })
       .join(" , ");
+
+    languages = movie.languages.join(" , ");
+
+    production_companies = [];
+    for (let i = 0; i < movie.production_companies.length; i++) {
+      if (movie.production_companies[i].logo_path.length !== 0) {
+        let logo = (
+          <div className="bg-white p-2 rounded m-2">
+            <img
+              className="h-10"
+              src={movie.production_companies[i].logo_path}
+              alt=""
+            />
+          </div>
+        );
+        production_companies.push(logo);
+      }
+    }
   }
 
   let [watchListBtn, setWatchListBtn] = useState(
@@ -56,12 +75,12 @@ function MovieInfo(props) {
   };
 
   const determineColor = (rating) => {
-    if (rating < 5 && rating > 0) {
+    if (rating === null) {
+      return "";
+    } else if (rating < 5) {
       return "hsl(0,100%,40%)";
     } else if (rating >= 5 && rating <= 7) {
       return "hsl(60,100%,30%)";
-    } else if (rating === 0) {
-      return "";
     } else {
       return "green";
     }
@@ -94,7 +113,7 @@ function MovieInfo(props) {
                   backgroundColor: determineColor(movie.rating),
                 }}
               >
-                {movie.rating === 0 ? "NA" : movie.rating}
+                {movie.rating === null ? "Unrated" : movie.rating}
               </span>
             </div>
           </div>
@@ -108,6 +127,9 @@ function MovieInfo(props) {
             <button
               className="m-4 p-2 bg-blue-900 rounded hover:text-white"
               onClick={handleWatchListBtn}
+              style={{
+                display: props.isLoggedIn ? "" : "none",
+              }}
             >
               {watchListBtn}
             </button>
@@ -118,25 +140,29 @@ function MovieInfo(props) {
             </a>
           </div>
           <div className="ml-10 m-2 text-opacity-50 text-white space-y-3">
-            <div className="flex space-x-3">
-              <div>Starring : </div>
-              <div>{actors}</div>
+            <div className="space-x-3">
+              <span>Starring : </span>
+              <span>{actors || "NA"}</span>
             </div>
-            <div className="flex space-x-3">
-              <div>Directed By : </div>
-              <div>{directors}</div>
+
+            <div className="space-x-3">
+              <span>Directed By : </span>
+              <span>{directors || "NA"}</span>
             </div>
-            <div className="flex space-x-3">
-              <div>Writers : </div>
-              <div>{writers}</div>
+
+            <div className=" space-x-3">
+              <span>Writers : </span>
+              <span>{writers || "NA"}</span>
             </div>
-            <div className="flex space-x-3">
-              <div>Genre : </div>
-              <div>{movie.genres.join(" , ")}</div>
+
+            <div className="space-x-3">
+              <span>Genre : </span>
+              <span>{movie.genres.join(" , ")}</span>
             </div>
-            <div className="flex space-x-3">
-              <div>Language : </div>
-              <div>{movie.language}</div>
+
+            <div className="space-x-3">
+              <span>Available in Languages : </span>
+              <span>{languages}</span>
             </div>
           </div>
 
@@ -151,6 +177,14 @@ function MovieInfo(props) {
               controls={true}
             ></ReactPlayer>
           </div>
+          {production_companies.length !== 0 ? (
+            <div className="flex space-x-3 items-center text-white ml-10 m-2">
+              <span>Produced By </span>
+              <div className="flex flex-wrap space-x-4">
+                {production_companies}
+              </div>
+            </div>
+          ) : null}
         </div>
       ) : null}
     </>
@@ -159,13 +193,18 @@ function MovieInfo(props) {
 
 const mapStateToProps = (state) => {
   return {
+    isLoggedIn: state.user.isLoggedIn,
     movies: state.movies,
     watchList: state.user.watchlist,
+    actors: state.actors,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getMovieById: (id) => {
+      dispatch(actions.getMovieById(id));
+    },
     addToWatchList: (id) => {
       dispatch(actions.addToWatchList(id));
       dispatch(actions.getWatchlist());
