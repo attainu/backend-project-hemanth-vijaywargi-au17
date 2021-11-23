@@ -55,8 +55,8 @@ const SignUp = (props) => {
 
   return (
     <div>
-      <div className="main">
-        <div className="container">
+      <div className="main font-semibold w-full text-textcolor ">
+        <div className="signupcontainer flex justify-end">
           <div className="signup-content">
             <form
               method="POST"
@@ -66,7 +66,7 @@ const SignUp = (props) => {
               noValidate
             >
               <h2>Sign Up</h2>
-              <div className="form-group">
+              <div className="form-group h-full">
                 <input
                   type="username"
                   className="form-input"
@@ -147,24 +147,26 @@ const SignUp = (props) => {
                   }}
                 />
               </div>
-              <div className=" message">
+              <div className="message">
                 {validationError.message || props.error_message}
               </div>
-              <button className="submit-form">
+              <button className="submit-form float-left">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
                 Register
               </button>
-              <span className="existing">
-                <span>Already a Member ?</span>
-                <Link to="/login">Log In</Link>
+              <div>
+              <span className="existing float-center pt-3">
+                <span className="text-white">Already a Member ?</span>
+                <Link to="/login" className="linking">Log In</Link>
               </span>
+              </div>
             </form>
           </div>
+          </div>
         </div>
-      </div>
     </div>
   );
 };

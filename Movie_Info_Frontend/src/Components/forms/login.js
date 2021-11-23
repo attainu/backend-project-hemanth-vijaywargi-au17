@@ -37,13 +37,13 @@ const Login = (props) => {
 
   return (
     <div>
-      <div className="font-semibold w-full h-screen text-textcolor main ">
-        <div className="container flex justify-end pt-32 p-4 ">
-          <div className="signup-content bg-backgroundColor">
+      <div className="main font-semibold w-full text-textcolor ">
+        <div className="container flex justify-end">
+          <div className="login-content bg-backgroundColor">
             <form
               method="POST"
               id="signup-form"
-              className="signup-form pb-7 pl-32"
+              className="signup-form"
               onSubmit={handleSubmitForm}
               noValidate
             >
@@ -51,7 +51,7 @@ const Login = (props) => {
               <div className="form-group">
                 <input
                   type="email"
-                  className="form-input bg-backgroundColor"
+                  className="form-input "
                   name="email"
                   id="email"
                   placeholder="Email"
@@ -67,7 +67,7 @@ const Login = (props) => {
               <div className="form-group">
                 <input
                   type="password"
-                  className="form-input bg-backgroundColor"
+                  className="form-input"
                   name="password"
                   id="password"
                   placeholder="Password"
@@ -80,7 +80,7 @@ const Login = (props) => {
                   }}
                 />
               </div>
-              <div className="form-group message">
+              <div className="message">
                 {validationError.message || props.error_message}
               </div>
               <button className="submit-form">
