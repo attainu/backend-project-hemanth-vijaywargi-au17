@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Joi from "joi";
-import { Link,Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import actions from "../../Actions";
 import { connect } from "react-redux";
 
@@ -9,8 +9,10 @@ const SignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
+  const [image, setImage] = useState(null);
   const [validationError, setValidationError] = useState("");
-  if (props.error_message==="Sign Up SuccessFull!") {
+  if (props.error_message === "Sign Up SuccessFull!") {
+    props.clear_message()
     return <Navigate to="/login" />;
   }
   const userSchema = Joi.object({
@@ -47,7 +49,7 @@ const SignUp = (props) => {
       setValidationError(result.error);
     } else {
       setValidationError("");
-      props.signup(username, email, password, null);
+      props.signup(username, email, password, image);
     }
   };
 
@@ -128,6 +130,23 @@ const SignUp = (props) => {
                   }}
                 />
               </div>
+              <div className="form-group">
+                <div className="text-blue-400 my-2">
+                  Upload your profile picture (optional)
+                </div>
+                <input
+                  type="file"
+                  className="form-input"
+                  name="userImage"
+                  onChange={(e) => {
+                    setImage(e.target.files[0]);
+                  }}
+                  onClick={() => {
+                    props.clear_message();
+                    setValidationError("");
+                  }}
+                />
+              </div>
               <div className=" message">
                 {validationError.message || props.error_message}
               </div>
@@ -146,7 +165,6 @@ const SignUp = (props) => {
           </div>
         </div>
       </div>
-      <Link to="/">Go to Home</Link>
     </div>
   );
 };

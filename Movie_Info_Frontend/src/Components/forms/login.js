@@ -9,7 +9,6 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validationError, setValidationError] = useState("");
-
   if (props.isLoggedIn) {
     return <Navigate to="/" />;
   }

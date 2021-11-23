@@ -13,6 +13,7 @@ app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(morgan('dev'))
+app.use(express.static(__dirname + '/public'));
 
 // Database
 const dbHelper = require("./db.js");
