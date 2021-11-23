@@ -1,35 +1,26 @@
-h2 {
+.signup-content h2 {
   margin: 0;
   padding: 0;
   font-weight: bold;
   font-size: 36px;
   margin: 20px 0px;
+  color:#03e9f4;
 }
 
 .main {
-  font-weight: 600;
   background-image: url("images/body-bg.jpg");
-  overflow: hidden;
-  color: #03e9f4;
-  height: 100vh;
+  overflow:hidden;
 }
 
 .container {
-  margin-top: 40px;
   width: 1125px;
-  padding-top: 135px;
-  padding-bottom: 115px;
   background-image: url("images/container-bg.png");
-  overflow: hidden;
-  display: flex;
-  justify-content: flex-end;
 }
 
 .signup-content {
-  background-color: rgba(0, 0, 0, 0.4);
   width: 598px;
-  margin-right: 0px;
   height: 500px;
+  margin-left: 10px;
 }
 
 .signup-form {
@@ -40,7 +31,7 @@ h2 {
   margin-bottom: 30px;
 }
 
-input {
+.form-input {
   border: none;
   box-sizing: border-box;
   border-bottom: 2px solid #03e9f4;
@@ -53,6 +44,7 @@ input {
   font-size: 16px;
   padding: 6px 5px;
   letter-spacing: 1px;
+  backgroundColor:"rgba(0, 0, 0, 0.4)",
 }
 
 ::placeholder {
@@ -166,19 +158,19 @@ input {
 }
 
 .existing {
-  color: white;
   display: flex;
   font-size: larger;
 }
-a{
+
+.linking{
   color:#03e9f4;
   margin-left:10px ;
   text-decoration: none;
 }
+
 .message{
   box-sizing: border-box;
   color:#FF0000;
   height: 20px;
   margin: 20px 0px;
-
 }

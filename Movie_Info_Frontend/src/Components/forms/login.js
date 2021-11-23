@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { connect } from "react-redux";
 import Joi from "joi";
+import './login.css'
 import actions from "../../Actions";
 
 const Login = (props) => {
@@ -37,13 +38,13 @@ const Login = (props) => {
 
   return (
     <div>
-      <div className="main">
-        <div className="container">
-          <div className="signup-content">
+      <div className="font-semibold w-full h-screen text-textcolor main ">
+        <div className="container flex justify-end pt-32 p-4 ">
+          <div className="signup-content bg-backgroundColor">
             <form
               method="POST"
               id="signup-form"
-              className="signup-form"
+              className="signup-form pb-7 pl-32"
               onSubmit={handleSubmitForm}
               noValidate
             >
@@ -51,7 +52,7 @@ const Login = (props) => {
               <div className="form-group">
                 <input
                   type="email"
-                  className="form-input"
+                  className="form-input bg-backgroundColor"
                   name="email"
                   id="email"
                   placeholder="Email"
@@ -67,7 +68,7 @@ const Login = (props) => {
               <div className="form-group">
                 <input
                   type="password"
-                  className="form-input"
+                  className="form-input bg-backgroundColor"
                   name="password"
                   id="password"
                   placeholder="Password"
@@ -91,14 +92,14 @@ const Login = (props) => {
                 Submit
               </button>
               <span className="existing">
-                <span>Not a member ?</span>
-                <Link to="/signup">Sign Up</Link>
+                <span className="text-white">Not a member ?</span>
+                <Link to="/signup" className="linking">Sign Up</Link>
               </span>
             </form>
           </div>
         </div>
+        <Link to="/" className="linking float-right font-bold mr-5"> Go to Home </Link>
       </div>
-      <Link to="/">Go to Home</Link>
     </div>
   );
 };
