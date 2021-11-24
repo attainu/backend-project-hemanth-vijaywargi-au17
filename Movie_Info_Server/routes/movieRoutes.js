@@ -23,14 +23,8 @@ movieRoutes.get("/by_id", async (req, res) => {
         name: m.title,
         overview: m.overview || "",
         runtime: m.runtime + " mins" || "",
-        poster_path:
-          m.poster_path !== null
-            ? `https://image.tmdb.org/t/p/original${m.poster_path}`
-            : "",
-        backdrop_path:
-          m.backdrop_path !== null
-            ? `https://image.tmdb.org/t/p/original${m.backdrop_path}`
-            : "",
+        poster_path: m.poster_path || "",
+        backdrop_path: m.backdrop_path || "",
         release_date: m.release_date || "",
         adult: m.adult,
         TMDB_id: m.id,
@@ -52,9 +46,7 @@ movieRoutes.get("/by_id", async (req, res) => {
           m.production_companies.map((company) => {
             return {
               name: company.name,
-              logo_path: company.logo_path
-                ? `https://image.tmdb.org/t/p/original${company.logo_path}`
-                : "",
+              logo_path: company.logo_path || "",
               origin_country: company.origin_country,
               id: company.id,
             };
@@ -168,7 +160,18 @@ movieRoutes.get("/search", async (req, res) => {
   let response = await axios.get(
     `https://api.themoviedb.org/3/search/movie?api_key=${process.env.TMDB_API_KEY}&query=${query}&page=1`
   );
-  res.json(response.data);
+  let movies = response.data.results;
+  const promisesArray = movies.map((movie) => {
+    let responsePromise = axios.get(
+      `https://api.themoviedb.org/3/movie/${movie.id}/external_ids?api_key=${process.env.TMDB_API_KEY}`
+    );
+    return responsePromise;
+  });
+  const responseData = await Promise.all(promisesArray);
+  responseData.forEach((response, index) => {
+    movies[index].imdb_id = response.data.imdb_id;
+  });
+  res.json(movies);
 });
 
 module.exports = movieRoutes;

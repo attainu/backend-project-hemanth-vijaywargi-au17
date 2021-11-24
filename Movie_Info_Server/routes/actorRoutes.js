@@ -8,9 +8,9 @@ const actorRoutes = Router();
 
 actorRoutes.get("/by_imdb_id", async (req, res) => {
   let id = req.query.imdb_id;
-  let response = await ActorModel.find({ imdb_id: id });
+  let response = await ActorModel.find({ "imdb_id": id });
 
-  if (response.length != 0) {
+  if (response.length !== 0) {
     res.json(response);
   } else {
     try {
@@ -28,7 +28,7 @@ actorRoutes.get("/by_imdb_id", async (req, res) => {
         imdb_id: id,
         name: response.data.results.name,
         imageURL:
-          response.data.results.image_url || `/userImages/default-actor.png`,
+          response.data.results.image_url || "",
       };
       let insertedData = await ActorModel.create(actorObj);
       res.json(insertedData);

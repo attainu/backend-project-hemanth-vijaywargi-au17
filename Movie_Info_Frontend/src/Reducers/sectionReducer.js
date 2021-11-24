@@ -3,6 +3,7 @@ const initialState = {
   now_playing: [],
   top_rated: [],
   upcoming: [],
+  search_results: [],
 };
 
 // Reducer
@@ -27,6 +28,14 @@ const sectionReducer = (state = initialState, action) => {
         upcoming: [...state.upcoming, ...action.payload],
       };
   }
+
+  if (action.type === "GET_SEARCH_RESULTS") {
+    return {
+        ...state,
+        search_results: action.payload,
+      };
+  }
+
 
   return state;
 };

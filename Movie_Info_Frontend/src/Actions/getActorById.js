@@ -9,9 +9,10 @@ const getActorById = (id) => {
       });
     } else {
       let response = await axios.get(`/actor/by_imdb_id?imdb_id=${id}`);
-      if (response.data.error || response.data.length === 0) {
+      if (response.data.error) {
         dispatch({
           type: "ACTOR_DATA_NOT_FOUND",
+          payload:{imdb_id:id,error:true}
         });
       } else {
         dispatch({

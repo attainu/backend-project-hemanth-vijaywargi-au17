@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 function Carousel(props) {
   const [currImg, setCurrImg] = useState(0);
+  let backdrop_size = "w780"
+
   let now_playing_movies = [];
 
   for (let i = 0; i < props.now_playing.length; i++) {
@@ -12,6 +14,7 @@ function Carousel(props) {
       now_playing_movies.push(movie);
     }
   }
+
   return (
     <>
       {now_playing_movies.length !== 0 ? (
@@ -20,7 +23,7 @@ function Carousel(props) {
           <div
             className="w-full h-full flex"
             style={{
-              backgroundImage: `url(${now_playing_movies[currImg].backdrop_path})`,
+              backgroundImage: `url(${`https://image.tmdb.org/t/p/${backdrop_size}`+now_playing_movies[currImg].backdrop_path})`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               backgroundSize: "contain",

@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 function MovieCard(props) {
   let movie = props.movies[props.id];
+  let poster_size = "w185";
+  const [image,setImage] = useState("")
 
   const determineColor = (rating) => {
     if (rating === null) {
@@ -15,7 +18,7 @@ function MovieCard(props) {
       return "green";
     }
   };
-
+  
   return (
     <>
       {movie !== undefined ? (
@@ -24,7 +27,8 @@ function MovieCard(props) {
           className="rounded overflow-hidden shadow-lg max-w-sm w-40 text-center inline-flex flex-col justify-between items-center bg-gray-800 pb-2"
         >
           <img
-            src={movie.poster_path}
+            src={movie.poster_path.length!==0?`https://image.tmdb.org/t/p/${poster_size}${movie.poster_path}`:image}
+            onError={()=>{setImage("")}}
             alt="Not available"
             className="w-full h-60"
           />
@@ -46,6 +50,8 @@ function MovieCard(props) {
 const mapStateToProps = (state) => {
   return {
     movies: state.movies,
+    isLoggedIn: state.user.isLoggedIn,
+    watchList: state.user.watchlist,
   };
 };
 

@@ -9,6 +9,7 @@ import getWatchlist from "./getWatchlist";
 import addToWatchList from "./addToWatchlist";
 import removeFromWatchList from "./removeFromWatchlist";
 import userSignUp from "./userSignUp";
+import getSearchResults from "./getSearchResults";
 
 const actions = {
   getMovieById,
@@ -21,7 +22,8 @@ const actions = {
   getWatchlist,
   addToWatchList,
   removeFromWatchList,
-  userSignUp
+  userSignUp,
+  getSearchResults,
 };
 
 export default actions;

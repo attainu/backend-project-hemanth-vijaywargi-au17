@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import actions from "../Actions";
 
 function NavBar(props) {
   const [query, setQuery] = useState("");
+  let navigate = useNavigate();
   const handleSearch = () => {
-    console.log(query);
+    if (query !== "") {
+      navigate(`/search_results/${query}`);
+      setQuery("")
+    }
   };
 
   return (
@@ -82,9 +86,13 @@ function NavBar(props) {
               Log out
             </div>
 
-            <Link className="hover:bg-hover px-3 py-2 rounded" to="/watchlist"
+            <Link
+              className="hover:bg-hover px-3 py-2 rounded"
+              to="/watchlist"
               onClick={props.getWatchlist}
-            >Watch List</Link>
+            >
+              Watch List
+            </Link>
           </div>
         ) : (
           <div className="flex items-center space-x-1">
@@ -113,7 +121,9 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => {
       dispatch(actions.userLogOut());
     },
-    getWatchlist : ()=>{dispatch(actions.getWatchlist())}
+    getWatchlist: () => {
+      dispatch(actions.getWatchlist());
+    },
   };
 };
 

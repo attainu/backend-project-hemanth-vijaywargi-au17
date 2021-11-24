@@ -3,14 +3,15 @@ import "./Movie.css";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import actions from "../Actions";
-import { useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ActorCard from "./ActorCard";
 
 function MovieInfo(props) {
   let params = useParams();
   let id = params.id;
   let movie = props.movies[id];
-  let [playing, setPlaying] = useState(false);
+  let [trailerPlayState, setTrailerPlayState] = useState(false);
+  let backdrop_size = "w780";
 
   let writers;
   let directors;
@@ -19,10 +20,15 @@ function MovieInfo(props) {
   let production_companies;
   let actorComponents;
 
+  useEffect(() => {
+    if(movie!==undefined){
+      props.getActorsInfo(movie.actors);
+    }
+  }, [movie]);
+
   if (movie === undefined) {
     props.getMovieById(id);
   } else {
-    props.getActorsInfo(movie.actors);
     directors = movie.directors
       .map((director) => {
         return director.name;
@@ -49,12 +55,18 @@ function MovieInfo(props) {
 
     production_companies = [];
     for (let i = 0; i < movie.production_companies.length; i++) {
-      if (movie.production_companies[i].logo_path.length !== 0) {
+      if (
+        movie.production_companies[i].logo_path !== null &&
+        movie.production_companies[i].logo_path.length !== 0
+      ) {
         let logo = (
           <div className="bg-white p-2 rounded m-2">
             <img
               className="h-10"
-              src={movie.production_companies[i].logo_path}
+              src={
+                "https://image.tmdb.org/t/p/w92" +
+                movie.production_companies[i].logo_path
+              }
               alt=""
             />
           </div>
@@ -66,30 +78,68 @@ function MovieInfo(props) {
     actorComponents = [];
     for (let i = 0; i < movie.actors.length; i++) {
       let actorInfo = props.actors[movie.actors[i].actor_info.imdb_id];
-      if (actorInfo !== undefined) {
+      if (actorInfo !== undefined && actorInfo.error!==true) {
         actorComponents.push(
           <ActorCard details={actorInfo} role={movie.actors[i].role} />
         );
       } else {
         actorComponents.push(null);
       }
-      if(i===10){
+      if (i === 10) {
         break;
       }
     }
   }
 
+  let removeBtn = () => {
+    return (
+      <Fragment>
+        <svg
+          class="w-6 h-6 text-red-500"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        <span>Remove From WatchList</span>
+      </Fragment>
+    );
+  };
+  let addBtn = () => {
+    return (
+      <Fragment>
+        <svg
+          class="w-6 h-6 text-green-500"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        <span>Add To WatchList</span>
+      </Fragment>
+    );
+  };
   let [watchListBtn, setWatchListBtn] = useState(
-    props.watchList.includes(id) ? "Remove From WatchList" : "Add To WatchList"
+    props.watchList.includes(id) ? removeBtn : addBtn
   );
 
   const handleWatchListBtn = () => {
     if (props.watchList.includes(id)) {
       props.removeFromWatchList(id);
-      setWatchListBtn("Add To WatchList");
+      setWatchListBtn(addBtn);
     } else {
       props.addToWatchList(id);
-      setWatchListBtn("Remove From WatchList");
+      setWatchListBtn(removeBtn);
     }
   };
 
@@ -110,7 +160,10 @@ function MovieInfo(props) {
       {movie !== undefined ? (
         <div className="bg-black overflow-hidden">
           <div className="float-right w-full md:w-1/2 md:h-1/2 lg:float-right backdrop ">
-            <img src={movie.backdrop_path} alt="Not Available" />
+            <img
+              src={`https://image.tmdb.org/t/p/${backdrop_size}${movie.backdrop_path}`}
+              alt="Not Available"
+            />
           </div>
           <div>
             <div className="w-full font-extrabold mb-3  p-5 pl-0 ml-10 text-white text-3xl">
@@ -142,9 +195,9 @@ function MovieInfo(props) {
             ) : null}
             <label>{movie.overview}</label>
           </div>
-          <div className="p-5 text-white text-opacity-50">
+          <div className="p-5 text-white text-opacity-50 flex flex-wrap items-center">
             <button
-              className="m-4 p-2 bg-blue-900 rounded hover:text-white"
+              className="m-4 p-2 bg-blue-900 rounded hover:text-white flex space-x-2"
               onClick={handleWatchListBtn}
               style={{
                 display: props.isLoggedIn ? "" : "none",
@@ -152,16 +205,18 @@ function MovieInfo(props) {
             >
               {watchListBtn}
             </button>
-            <a href="#trailer">
-              <button
-                className="m-4 p-2 bg-blue-900 rounded hover:text-white"
-                onClick={() => {
-                  setPlaying(!playing);
-                }}
-              >
-                Watch trailer
-              </button>
-            </a>
+            {movie.trailer_link !== "" ? (
+              <a href="#trailer">
+                <button
+                  className="m-4 p-2 bg-blue-900 rounded hover:text-white"
+                  onClick={() => {
+                    setTrailerPlayState(!trailerPlayState);
+                  }}
+                >
+                  Watch trailer
+                </button>
+              </a>
+            ) : null}
           </div>
           <div className="ml-10 m-2 text-opacity-50 text-white space-y-3">
             <div className="space-x-3">
@@ -209,7 +264,7 @@ function MovieInfo(props) {
                 height="75%"
                 url={`https://www.youtube.com/embed/${movie.trailer_link}`}
                 controls={true}
-                playing={playing}
+                playing={trailerPlayState}
               ></ReactPlayer>
             </div>
           ) : null}

@@ -1,18 +1,20 @@
 // Initial State
 const initialState = {};
-  
+
 // Reducer
 const actorReducer = (state = initialState, action) => {
+  if (action.type === "GET_ACTOR" || action.type === "ACTOR_DATA_NOT_FOUND") {
+    let stateObj = {};
+    Object.assign(stateObj, state);
 
-    if(action.type==="GET_ACTOR"){
-        let stateObj = {}
-        Object.assign(stateObj, state);
-        let id = action.payload.imdb_id
-        stateObj[id] = action.payload
-        return stateObj
+    if (action.payload !== undefined) {
+      let id = action.payload.imdb_id;
+      stateObj[id] = action.payload;
+      return stateObj;
     }
+  }
 
-    return state
+  return state;
 };
 
-export default actorReducer
+export default actorReducer;
