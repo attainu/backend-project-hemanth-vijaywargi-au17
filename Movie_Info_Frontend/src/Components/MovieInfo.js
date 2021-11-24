@@ -277,7 +277,7 @@ function MovieInfo(props) {
             </div>
           ) : null}
         </div>
-      ) : null}
+      ) : id===null?<div className="text-white text-2xl text-center">No Info Available :(</div>:null}
     </>
   );
 }

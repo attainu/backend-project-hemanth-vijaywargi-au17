@@ -6,11 +6,9 @@ const movieReducer = (state = initialState, action) => {
   if (action.type === "GET_MOVIE") {
     let stateObj = {};
     Object.assign(stateObj, state);
-    if (action.payload !== undefined) {
-      let imdb_id = action.payload.IMDB_id;
-      stateObj[imdb_id] = action.payload;
-      return stateObj;
-    }
+    let imdb_id = action.payload.IMDB_id;
+    stateObj[imdb_id] = action.payload;
+    return stateObj;
   }
 
   return state;

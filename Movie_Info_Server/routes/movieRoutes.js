@@ -169,7 +169,7 @@ movieRoutes.get("/search", async (req, res) => {
   });
   const responseData = await Promise.all(promisesArray);
   responseData.forEach((response, index) => {
-    movies[index].imdb_id = response.data.imdb_id;
+    movies[index].IMDB_id = response.data.imdb_id;
   });
   res.json(movies);
 });

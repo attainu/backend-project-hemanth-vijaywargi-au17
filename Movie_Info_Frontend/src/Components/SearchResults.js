@@ -15,19 +15,19 @@ function SearchResults(props) {
   }, [getSearchResults, query]);
 
   return (
-    <div className="py-5">
-      <div className="text-3xl text-center text-white my-5">
+    <div className="py-5 text-white">
+      <div className="text-3xl text-center  my-5">
         Search Results for "{query}" :
       </div>
 
       <div className="flex flex-wrap gap-3 justify-center">
-        {search_results.map((movie) => {
+        {search_results.length!==0?search_results.map((movie) => {
           if (movie.imdb_id !== "" && movie.imdb_id !== null) {
             return <SearchResult movie={movie} />;
           } else {
             return null;
           }
-        })}
+        }):"No Results Found"}
       </div>
     </div>
   );

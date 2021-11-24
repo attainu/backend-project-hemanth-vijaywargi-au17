@@ -12,7 +12,6 @@ const ActorSchema = new mongoose.Schema({
   },
   imageURL: {
     type: String,
-    required: true,
   },
 });
 

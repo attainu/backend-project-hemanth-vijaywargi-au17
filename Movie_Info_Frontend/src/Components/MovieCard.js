@@ -27,9 +27,9 @@ function MovieCard(props) {
           className="rounded overflow-hidden shadow-lg max-w-sm w-40 text-center inline-flex flex-col justify-between items-center bg-gray-800 pb-2"
         >
           <img
-            src={movie.poster_path.length!==0?`https://image.tmdb.org/t/p/${poster_size}${movie.poster_path}`:image}
+            src={`https://image.tmdb.org/t/p/${poster_size}${movie.poster_path}`}
             onError={()=>{setImage("")}}
-            alt="Not available"
+            alt="Poster Not available"
             className="w-full h-60"
           />
           <div className="font-bold text-sm mb-2 p-2">{movie.name}</div>

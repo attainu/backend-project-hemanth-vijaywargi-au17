@@ -17,7 +17,7 @@ function App(props) {
 
   useEffect(() => {
     getAllSections();
-  }, [getAllSections]);
+  }, []);
 
   return (
     <BrowserRouter>

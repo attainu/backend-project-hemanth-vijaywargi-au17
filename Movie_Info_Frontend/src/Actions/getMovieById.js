@@ -9,7 +9,7 @@ const getMovieById = (id) => {
       });
     } else {
       let response = await axios.get(`/movie/by_id?id=${id}`);
-      if (response.data.error) {
+      if (response.data.error || response.data[0]===undefined) {
         dispatch({
           type: "MOVIE_DATA_NOT_FOUND",
         });

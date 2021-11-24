@@ -64,7 +64,7 @@ userRoutes.post("/login", async (req, res) => {
 
     res.json({
       error: true,
-      message: "User credentials does not match",
+      message: "Incorrect Password !",
     });
   } catch (err) {
     res.json({
