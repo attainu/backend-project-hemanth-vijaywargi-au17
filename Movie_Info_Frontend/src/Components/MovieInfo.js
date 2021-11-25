@@ -11,7 +11,6 @@ function MovieInfo(props) {
   let movie = props.movies[id];
   let [trailerPlayState, setTrailerPlayState] = useState(false);
   let backdrop_size = "w780";
-  let {getActorsInfo} = props
 
   let actors;
   let production_companies;
@@ -19,9 +18,9 @@ function MovieInfo(props) {
 
   useEffect(() => {
     if (movie !== undefined) {
-      getActorsInfo(movie.actors);
+      props.getActorsInfo(movie.actors);
     }
-  }, [movie,getActorsInfo]);
+  }, []);
 
   if (movie === undefined) {
     props.getMovieById(id);
