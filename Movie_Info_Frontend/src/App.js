@@ -13,11 +13,14 @@ import ScrollToTop from "./Components/ScrollToTop";
 import SearchResults from "./Components/SearchResults";
 
 function App(props) {
-  let { getAllSections } = props;
+  let { getAllSections,isLoggedIn,getWatchlist } = props;
 
   useEffect(() => {
+    if(isLoggedIn){
+      getWatchlist()
+    }
     getAllSections();
-  }, []);
+  }, [getAllSections,isLoggedIn,getWatchlist]);
 
   return (
     <BrowserRouter>

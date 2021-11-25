@@ -14,6 +14,7 @@ const removeFromWatchList = (id) => {
     
     dispatch({
       type: "REMOVE_FROM_WATCHLIST",
+      payload:id
     });
   };
 };

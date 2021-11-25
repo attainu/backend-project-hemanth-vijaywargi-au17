@@ -16,6 +16,7 @@ const addToWatchList = (id) => {
 
     dispatch({
       type: "ADD_TO_WATCHLIST",
+      payload:id
     });
   };
 };

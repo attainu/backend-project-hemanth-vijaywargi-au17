@@ -1,5 +1,4 @@
 import { useParams } from "react-router";
-import "./Movie.css";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import actions from "../Actions";
@@ -12,29 +11,21 @@ function MovieInfo(props) {
   let movie = props.movies[id];
   let [trailerPlayState, setTrailerPlayState] = useState(false);
   let backdrop_size = "w780";
+  let {getActorsInfo} = props
 
-  let writers;
-  let directors;
   let actors;
-  let languages;
   let production_companies;
-  let actorComponents;
+  let castComponents;
 
   useEffect(() => {
-    if(movie!==undefined){
-      props.getActorsInfo(movie.actors);
+    if (movie !== undefined) {
+      getActorsInfo(movie.actors);
     }
-  }, [movie]);
+  }, [movie,getActorsInfo]);
 
   if (movie === undefined) {
     props.getMovieById(id);
   } else {
-    directors = movie.directors
-      .map((director) => {
-        return director.name;
-      })
-      .join(" , ");
-
     actors = [];
     for (let i = 0; i < movie.actors.length; i++) {
       actors.push(movie.actors[i].actor_info.name);
@@ -44,14 +35,6 @@ function MovieInfo(props) {
     }
 
     actors = actors.join(" , ");
-
-    writers = movie.writers
-      .map((writer) => {
-        return writer.name;
-      })
-      .join(" , ");
-
-    languages = movie.languages.join(" , ");
 
     production_companies = [];
     for (let i = 0; i < movie.production_companies.length; i++) {
@@ -75,15 +58,15 @@ function MovieInfo(props) {
       }
     }
 
-    actorComponents = [];
+    castComponents = [];
     for (let i = 0; i < movie.actors.length; i++) {
       let actorInfo = props.actors[movie.actors[i].actor_info.imdb_id];
-      if (actorInfo !== undefined && actorInfo.error!==true) {
-        actorComponents.push(
+      if (actorInfo !== undefined && actorInfo.error !== true) {
+        castComponents.push(
           <ActorCard details={actorInfo} role={movie.actors[i].role} />
         );
       } else {
-        actorComponents.push(null);
+        castComponents.push(null);
       }
       if (i === 10) {
         break;
@@ -226,12 +209,17 @@ function MovieInfo(props) {
 
             <div className="space-x-3">
               <span>Directed By : </span>
-              <span>{directors || "NA"}</span>
+              <span>
+                {movie.directors.map((director) => director.name).join(" , ") ||
+                  "NA"}
+              </span>
             </div>
 
             <div className=" space-x-3">
               <span>Writers : </span>
-              <span>{writers || "NA"}</span>
+              <span>
+                {movie.writers.map((writer) => writer.name).join(" , ") || "NA"}
+              </span>
             </div>
 
             <div className="space-x-3">
@@ -241,15 +229,15 @@ function MovieInfo(props) {
 
             <div className="space-x-3">
               <span>Available in Languages : </span>
-              <span>{languages}</span>
+              <span>{movie.languages.join(" , ")}</span>
             </div>
           </div>
           {/*Cast Section*/}
-          {actorComponents.length !== 0 ? (
+          {castComponents.length !== 0 ? (
             <div className="my-3">
               <h2 className="text-4xl my-2 text-white text-center">Cast</h2>
               <div className="flex flex-wrap justify-center">
-                {actorComponents}
+                {castComponents}
               </div>
             </div>
           ) : null}
@@ -277,7 +265,11 @@ function MovieInfo(props) {
             </div>
           ) : null}
         </div>
-      ) : id===null?<div className="text-white text-2xl text-center">No Info Available :(</div>:null}
+      ) : id === null ? (
+        <div className="text-white text-2xl text-center">
+          No Info Available :(
+        </div>
+      ) : null}
     </>
   );
 }

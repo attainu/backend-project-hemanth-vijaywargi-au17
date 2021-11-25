@@ -1,3 +1,6 @@
 body{
     background-color: hsl(220,39%,10%);
 }
+.backdrop{
+    mask: linear-gradient(to left, #000, transparent);
+}
