@@ -1,4 +1,5 @@
 import axios from "axios";
+import actions from ".";
 
 // Action Creator
 const removeFromWatchList = (id) => {
@@ -16,6 +17,7 @@ const removeFromWatchList = (id) => {
       type: "REMOVE_FROM_WATCHLIST",
       payload:id
     });
+    dispatch(actions.getWatchlist());
   };
 };
 

@@ -1,34 +1,36 @@
-import { connect } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router";
+import actions from "../Actions";
 import MovieCard from "./MovieCard";
 
-function WatchList(props) {
-  if (!props.isLoggedIn) {
+function WatchList() {
+  let watchlist = useSelector((state) => {
+    return state.user.watchlist;
+  });
+  let isLoggedIn = useSelector((state) => {
+    return state.user.isLoggedIn;
+  });
+
+  let dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actions.getWatchlist())
+  }, []);
+
+  if (!isLoggedIn) {
     return <Navigate to="/login" />;
   }
   return (
     <div className="bg-gray-900 text-white px-20 py-6">
       <h2 className="text-4xl text-center font-bold">Your WatchList</h2>
       <div className="flex flex-wrap  gap-3 m-5">
-        {props.watchList.map((movieId)=>{
-          return <MovieCard id={movieId}/>
+        {watchlist.map((movieId) => {
+          return <MovieCard id={movieId} />;
         })}
       </div>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isLoggedIn: state.user.isLoggedIn,
-    watchList: state.user.watchlist,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(WatchList);
+export default WatchList;

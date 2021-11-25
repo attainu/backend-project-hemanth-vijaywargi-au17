@@ -89,7 +89,6 @@ function NavBar(props) {
             <Link
               className="hover:bg-hover px-3 py-2 rounded"
               to="/watchlist"
-              onClick={props.getWatchlist}
             >
               Watch List
             </Link>
@@ -120,9 +119,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => {
       dispatch(actions.userLogOut());
-    },
-    getWatchlist: () => {
-      dispatch(actions.getWatchlist());
     },
   };
 };

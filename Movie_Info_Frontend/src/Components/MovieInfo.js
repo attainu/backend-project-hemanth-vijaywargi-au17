@@ -289,7 +289,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     addToWatchList: (id) => {
       dispatch(actions.addToWatchList(id));
-      dispatch(actions.getWatchlist());
     },
     getActorsInfo: (actors) => {
       actors.forEach((actor) => {
@@ -298,7 +297,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     removeFromWatchList: (id) => {
       dispatch(actions.removeFromWatchList(id));
-      dispatch(actions.getWatchlist());
     },
   };
 };

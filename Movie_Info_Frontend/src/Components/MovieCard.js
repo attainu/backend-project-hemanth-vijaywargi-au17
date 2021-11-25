@@ -121,11 +121,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addToWatchList: (id) => {
       dispatch(actions.addToWatchList(id));
-      dispatch(actions.getWatchlist());
     },
     removeFromWatchList: (id) => {
       dispatch(actions.removeFromWatchList(id));
-      dispatch(actions.getWatchlist());
     },
   };
 };

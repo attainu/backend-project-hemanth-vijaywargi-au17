@@ -1,4 +1,5 @@
 import axios from "axios";
+import actions from ".";
 
 // Action Creator
 const addToWatchList = (id) => {
@@ -18,6 +19,7 @@ const addToWatchList = (id) => {
       type: "ADD_TO_WATCHLIST",
       payload:id
     });
+    dispatch(actions.getWatchlist());
   };
 };
 
