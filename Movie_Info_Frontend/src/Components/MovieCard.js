@@ -13,7 +13,7 @@ function MovieCard(props) {
   // const [image,setImage] = useState("")
   let removeIcon = (
     <svg
-      class="w-6 h-6 text-red-500"
+      class="w-6 h-6 text-red-700 group-hover:text-red-600 group-hover:bg-opacity-100 bg-gray-600 bg-opacity-40 rounded"
       fill="currentColor"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ function MovieCard(props) {
 
   let addIcon = (
     <svg
-      class="w-6 h-6 text-green-500"
+      class="w-6 h-6 text-green-500 group-hover:text-green-400 group-hover:bg-opacity-100 bg-gray-600 bg-opacity-40 rounded"
       fill="currentColor"
       viewBox="0 0 20 20"
       xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@ function MovieCard(props) {
             {movie.rating === null ? "Unrated" : movie.rating}
           </div>
           <button
-          className="absolute top-0 right-0 m-1"
+          className="absolute top-0 right-0 m-1 group"
             onClick={(e) => {
               e.stopPropagation();
               handleWatchListBtn();
