@@ -1,0 +1,24 @@
+{
+  "name": "backend-project-hemanth-vijaywargi-au17",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
+  "scripts": {
+    "heroku-prebuild": "cd Movie_Info_Frontend && npm install && npm run build && cd .. && cd Movie_Info_Server && npm install",
+    "start": "cd Movie_Info_Server && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/attainu/backend-project-hemanth-vijaywargi-au17.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/attainu/backend-project-hemanth-vijaywargi-au17/issues"
+  },
+  "homepage": "https://github.com/attainu/backend-project-hemanth-vijaywargi-au17#readme"
+}
