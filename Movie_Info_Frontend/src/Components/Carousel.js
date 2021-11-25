@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 function Carousel(props) {
   const [currImg, setCurrImg] = useState(0);
-  let backdrop_size = "w780"
+  let backdrop_size = "w780";
 
   let now_playing_movies = [];
 
@@ -23,7 +23,10 @@ function Carousel(props) {
           <div
             className="w-full h-full flex"
             style={{
-              backgroundImage: `url(${`https://image.tmdb.org/t/p/${backdrop_size}`+now_playing_movies[currImg].backdrop_path})`,
+              backgroundImage: `url(${
+                `https://image.tmdb.org/t/p/${backdrop_size}` +
+                now_playing_movies[currImg].backdrop_path
+              })`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               backgroundSize: "contain",
@@ -56,9 +59,13 @@ function Carousel(props) {
               </svg>
             </div>
             {/* Center Div */}
-            <div className="w-10/12 h-full flex justify-center items-end">
-              {/* Image Description */}
-              <div className="bg-white text-black px-4 rounded-5 m-1">
+            <div className="w-10/12 h-full flex flex-col justify-between items-center">
+              {/* Movie TagLine */}
+              <div className="bg-gray-500 text-xl bg-opacity-60 text-gray-200 px-4 rounded-5 m-1 rounded font-bold">
+                {now_playing_movies[currImg].tagline}
+              </div>
+              {/* Movie Name */}
+              <div className="bg-gray-500 text-3xl bg-opacity-60 text-gray-200 px-4 rounded-5 m-1 rounded font-bold">
                 {now_playing_movies[currImg].name}
               </div>
             </div>

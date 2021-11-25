@@ -6,9 +6,9 @@ import actions from "../Actions";
 
 function MovieCard(props) {
   let { id } = props;
-  let inWatchList = props.watchList.includes(id)
+  let inWatchList = props.watchList.includes(id);
   let movie = props.movies[id];
-  let poster_size = "w185";
+  let posterSize = "w185";
   let navigate = useNavigate();
   // const [image,setImage] = useState("")
   let removeIcon = (
@@ -41,9 +41,7 @@ function MovieCard(props) {
     </svg>
   );
 
-  let [svgIcon, setSvgIcon] = useState(
-    inWatchList ? removeIcon : addIcon
-  );
+  let [svgIcon, setSvgIcon] = useState(inWatchList ? removeIcon : addIcon);
 
   const handleWatchListBtn = () => {
     if (inWatchList) {
@@ -76,10 +74,10 @@ function MovieCard(props) {
       {movie !== undefined ? (
         <div
           onClick={handleClick}
-          className="relative rounded overflow-hidden shadow-lg max-w-sm w-40 text-center inline-flex flex-col justify-between items-center bg-gray-800 pb-2"
+          className="cursor-pointer transform hover:scale-105 ease-in-out relative rounded overflow-hidden shadow-lg max-w-sm w-40 text-center inline-flex flex-col justify-between items-center bg-gray-800 pb-2"
         >
           <img
-            src={`https://image.tmdb.org/t/p/${poster_size}${movie.poster_path}`}
+            src={`https://image.tmdb.org/t/p/${posterSize}${movie.poster_path}`}
             // onError={()=>{setImage("")}}
             alt="Poster Not available"
             className="w-full h-60"
@@ -94,7 +92,7 @@ function MovieCard(props) {
             {movie.rating === null ? "Unrated" : movie.rating}
           </div>
           <button
-          className="absolute top-0 right-0 m-1 group"
+            className="absolute top-0 right-0 m-1 group"
             onClick={(e) => {
               e.stopPropagation();
               handleWatchListBtn();
