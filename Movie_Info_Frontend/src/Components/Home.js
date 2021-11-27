@@ -1,13 +1,10 @@
 import MovieCard from "./MovieCard";
 import React from "react";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import Carousel from "./Carousel";
 
-function Home() {
-  let now_playing = useSelector((state) => state.sections.now_playing);
-  let top_rated = useSelector((state) => state.sections.top_rated);
-  let upcoming = useSelector((state) => state.sections.upcoming);
-
+function Home(props) {
+  let { now_playing, top_rated, upcoming, watchlist, isLoggedIn,movies } = props;
   return (
     <>
       <Carousel />
@@ -18,7 +15,17 @@ function Home() {
           {now_playing.length !== 0 ? (
             <div className="flex flex-wrap justify-center gap-3 m-5">
               {now_playing.map((movieId) => {
-                return <MovieCard id={movieId} />;
+                let inWatchlist = watchlist.includes(movieId);
+                let movie = movies[movieId];
+                return (
+                  <MovieCard
+                    id={movieId}
+                    key={movieId}
+                    inWatchlist={inWatchlist}
+                    isLoggedIn={isLoggedIn}
+                    movie={movie}
+                  />
+                );
               })}
             </div>
           ) : null}
@@ -29,7 +36,17 @@ function Home() {
           {top_rated.length !== 0 ? (
             <div className="flex flex-wrap justify-center gap-3 m-5">
               {top_rated.map((movieId) => {
-                return <MovieCard id={movieId} />;
+                let inWatchlist = watchlist.includes(movieId);
+                let movie = movies[movieId];
+                return (
+                  <MovieCard
+                    id={movieId}
+                    key={movieId}
+                    inWatchlist={inWatchlist}
+                    isLoggedIn={isLoggedIn}
+                    movie={movie}
+                  />
+                );
               })}
             </div>
           ) : null}
@@ -40,7 +57,17 @@ function Home() {
           {upcoming.length !== 0 ? (
             <div className="flex flex-wrap justify-center gap-3 m-5">
               {upcoming.map((movieId) => {
-                return <MovieCard id={movieId} />;
+                let inWatchlist = watchlist.includes(movieId);
+                let movie = movies[movieId];
+                return (
+                  <MovieCard
+                    id={movieId}
+                    key={movieId}
+                    inWatchlist={inWatchlist}
+                    isLoggedIn={isLoggedIn}
+                    movie={movie}
+                  />
+                );
               })}
             </div>
           ) : null}
@@ -50,4 +77,19 @@ function Home() {
   );
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    now_playing: state.sections.now_playing,
+    top_rated: state.sections.top_rated,
+    upcoming: state.sections.upcoming,
+    watchlist: state.user.watchlist,
+    isLoggedIn: state.user.isLoggedIn,
+    movies: state.movies,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

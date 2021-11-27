@@ -16,9 +16,9 @@ function App(props) {
   let { getAllSections, isLoggedIn, getWatchlist } = props;
 
   useEffect(() => {
-    // if (isLoggedIn) {
-    //   getWatchlist();
-    // }
+    if (isLoggedIn) {
+      getWatchlist();
+    }
     getAllSections();
   }, []);
 
